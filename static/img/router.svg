@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%">
+  <defs>
+    <!-- Chassis Gradients -->
+    <linearGradient id="rtrBodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2A3342" />
+      <stop offset="40%" stop-color="#1E2633" />
+      <stop offset="100%" stop-color="#121820" />
+    </linearGradient>
+    <linearGradient id="rtrFaceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#18202A" />
+      <stop offset="100%" stop-color="#0E131A" />
+    </linearGradient>
+    <linearGradient id="rtrAntennaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3A4556" />
+      <stop offset="50%" stop-color="#242D3A" />
+      <stop offset="100%" stop-color="#151B24" />
+    </linearGradient>
+    <linearGradient id="rtrAccentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00C9FF" />
+      <stop offset="100%" stop-color="#92FE9D" />
+    </linearGradient>
+    
+    <!-- LED Glow Filter -->
+    <filter id="rtrLedGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Shadow Filter -->
+    <filter id="rtrDropShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Ground Shadow -->
+  <ellipse cx="64" cy="108" rx="46" ry="7" fill="#000000" opacity="0.3" filter="blur(3px)" />
+
+  <!-- Antennas -->
+  <!-- Far Left Antenna (Angled) -->
+  <g transform="rotate(-18 32 68)">
+    <rect x="30" y="16" width="5.5" height="52" rx="2.75" fill="url(#rtrAntennaGrad)" />
+    <rect x="29" y="58" width="7.5" height="10" rx="1.5" fill="#18202A" />
+    <circle cx="32.75" cy="63" r="1.5" fill="#4B586B" />
+    <path d="M 30 18 L 35.5 18" stroke="#00E5FF" stroke-width="1.2" opacity="0.8" />
+  </g>
+
+  <!-- Mid Left Antenna -->
+  <g transform="rotate(-6 48 66)">
+    <rect x="46" y="12" width="5.5" height="56" rx="2.75" fill="url(#rtrAntennaGrad)" />
+    <rect x="45" y="58" width="7.5" height="10" rx="1.5" fill="#18202A" />
+    <circle cx="48.75" cy="63" r="1.5" fill="#4B586B" />
+    <path d="M 46 14 L 51.5 14" stroke="#00E5FF" stroke-width="1.2" opacity="0.8" />
+  </g>
+
+  <!-- Mid Right Antenna -->
+  <g transform="rotate(6 80 66)">
+    <rect x="77.5" y="12" width="5.5" height="56" rx="2.75" fill="url(#rtrAntennaGrad)" />
+    <rect x="76.5" y="58" width="7.5" height="10" rx="1.5" fill="#18202A" />
+    <circle cx="80.25" cy="63" r="1.5" fill="#4B586B" />
+    <path d="M 77.5 14 L 83 14" stroke="#00E5FF" stroke-width="1.2" opacity="0.8" />
+  </g>
+
+  <!-- Far Right Antenna (Angled) -->
+  <g transform="rotate(18 96 68)">
+    <rect x="93" y="16" width="5.5" height="52" rx="2.75" fill="url(#rtrAntennaGrad)" />
+    <rect x="92" y="58" width="7.5" height="10" rx="1.5" fill="#18202A" />
+    <circle cx="95.75" cy="63" r="1.5" fill="#4B586B" />
+    <path d="M 93 18 L 98.5 18" stroke="#00E5FF" stroke-width="1.2" opacity="0.8" />
+  </g>
+
+  <!-- Main Router Chassis with Shadow -->
+  <g filter="url(#rtrDropShadow)">
+    <!-- Base Bevel Edge -->
+    <path d="M 18 84 L 28 66 L 100 66 L 110 84 L 104 96 L 24 96 Z" fill="#10151C" />
+
+    <!-- Top Surface -->
+    <path d="M 21 82 L 30 67 L 98 67 L 107 82 L 101 88 L 27 88 Z" fill="url(#rtrBodyGrad)" stroke="#3E4A5C" stroke-width="1" />
+    
+    <!-- Top Geometric Air Vents / Heat Sink Grooves -->
+    <path d="M 38 72 L 90 72 M 36 75 L 92 75 M 34 78 L 94 78" stroke="#121820" stroke-width="1.5" stroke-linecap="round" />
+    <path d="M 38 72.8 L 90 72.8 M 36 75.8 L 92 75.8 M 34 78.8 L 94 78.8" stroke="#4F5D73" stroke-width="0.5" stroke-linecap="round" opacity="0.6" />
+
+    <!-- Front Beveled Facet -->
+    <path d="M 18 84 L 110 84 L 104 100 L 24 100 Z" fill="url(#rtrFaceGrad)" stroke="#2B3645" stroke-width="1" />
+
+    <!-- Bottom Lip Highlight -->
+    <path d="M 25 99 L 103 99" stroke="#3A4759" stroke-width="0.8" />
+
+    <!-- Front Accent Status Strip -->
+    <line x1="32" y1="87" x2="96" y2="87" stroke="url(#rtrAccentGrad)" stroke-width="1" opacity="0.7" />
+
+    <!-- High-Tech Status LEDs (Active Network State) -->
+    <!-- Power LED (Cyan) -->
+    <circle cx="36" cy="92" r="1.8" fill="#00E5FF" filter="url(#rtrLedGlow)" />
+    <!-- Internet / WAN LED (Emerald Green) -->
+    <circle cx="45" cy="92" r="1.8" fill="#00E676" filter="url(#rtrLedGlow)" />
+    <!-- 2.4 GHz Wi-Fi LED -->
+    <circle cx="54" cy="92" r="1.8" fill="#00E676" filter="url(#rtrLedGlow)" />
+    <!-- 5 GHz Wi-Fi LED -->
+    <circle cx="63" cy="92" r="1.8" fill="#00E676" filter="url(#rtrLedGlow)" />
+    <!-- LAN 1 -->
+    <circle cx="72" cy="92" r="1.5" fill="#00E676" filter="url(#rtrLedGlow)" />
+    <!-- LAN 2 -->
+    <circle cx="80" cy="92" r="1.5" fill="#00E676" filter="url(#rtrLedGlow)" />
+    <!-- LAN 3 (Activity pulse) -->
+    <circle cx="88" cy="92" r="1.5" fill="#00E5FF" filter="url(#rtrLedGlow)" />
+    <!-- Security / WPS -->
+    <circle cx="95" cy="92" r="1.4" fill="#38EF7D" opacity="0.9" />
+
+    <!-- Small Silkscreen Icons Beneath LEDs -->
+    <circle cx="36" cy="95.5" r="0.6" fill="#6B7A90" />
+    <path d="M 43.5 95.5 A 1.5 1.5 0 0 1 46.5 95.5" stroke="#6B7A90" stroke-width="0.6" fill="none" />
+    <path d="M 52.5 96 A 2 2 0 0 1 55.5 96 M 53.2 97 A 1 1 0 0 1 54.8 97" stroke="#6B7A90" stroke-width="0.6" fill="none" />
+    <path d="M 61.5 96 A 2 2 0 0 1 64.5 96 M 62.2 97 A 1 1 0 0 1 63.8 97" stroke="#6B7A90" stroke-width="0.6" fill="none" />
+    
+    <!-- Central Brand Badge -->
+    <rect x="60" y="80.5" width="8" height="2.5" rx="0.8" fill="#0D131A" stroke="#374354" stroke-width="0.5" />
+    <circle cx="64" cy="81.75" r="0.7" fill="#00E5FF" />
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+# =============================================================================
+# IoT Network Monitor — Production Dependencies
+# =============================================================================
+
+# Core Web Framework
+Flask>=2.3.0
+requests>=2.28.0
+
+# Desktop App (Native Window)
+pywebview>=5.0.0
+
+# Production WSGI Server (replaces Flask dev server)
+waitress>=2.1.0
+
+# Environment Configuration
+python-dotenv>=1.0.0
+
+# mDNS Service Discovery (ESP32 auto-finds server)
+zeroconf>=0.80.0

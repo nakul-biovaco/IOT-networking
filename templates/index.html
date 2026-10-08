@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>IoT Network Health &amp; Security Monitoring System</title>
+    <meta name="description" content="Windows 11 Fluent IoT Network Health &amp; Security Monitoring System">
+    <!-- Fluent / Segoe UI font stack fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/static/css/style.css?v={{ cache_bust }}">
+<body data-mob-tab="topology">
+    <div class="win11-window" id="app-window">
+        <!-- MOBILE NATIVE APP HEADER (Visible only on mobile <= 820px) -->
+        <header class="mobile-app-header">
+            <div class="mobile-header-brand">
+                <div class="mobile-brand-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+                        <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+                        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+                        <line x1="12" y1="20" x2="12.01" y2="20"/>
+                    </svg>
+                </div>
+                <div class="mobile-header-titles">
+                    <span class="mobile-app-title">IoT Network Monitor</span>
+                    <span class="mobile-app-sub">
+                        <span class="status-dot dot-online"></span>
+                        <span id="mob-header-status">Live Monitoring Active</span>
+                    </span>
+                </div>
+            </div>
+            <div class="mobile-header-actions">
+                <button class="mob-header-action-btn" onclick="triggerScan()" title="Scan Network">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                </button>
+                <button class="mob-header-action-btn" onclick="toggleMobileDrawer()" title="Menu">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- 1. APPLICATION MENU BAR -->
+        <nav class="win-menubar">
+            <div class="menubar-left">
+                <div class="menu-item" tabindex="0">
+                    <span>File</span>
+                    <div class="menu-dropdown">
+                        <div class="menu-option" onclick="triggerExportCSV()">Export Devices to CSV <span class="shortcut">Ctrl+E</span></div>
+                        <div class="menu-option" onclick="openReportsModal()">View System Report</div>
+                        <div class="menu-option" onclick="openAuthModal()">Admin Session Login...</div>
+                        <div class="menu-separator"></div>
+                        <div class="menu-option" onclick="showToast('Settings saved to database', 'success')">Save Configuration</div>
+                        <div class="menu-option menu-option-danger" onclick="resetAllSystem()">Reset Entire System &amp; Rediscover...</div>
+                        <div class="menu-separator"></div>
+                        <div class="menu-option" onclick="openAboutModal()">About System...</div>
+                    </div>
+                </div>
+                <div class="menu-item" tabindex="0">
+                    <span>View</span>
+                    <div class="menu-dropdown">
+                        <div class="menu-option" onclick="toggleAppFullscreen()">Desktop Full Screen <span class="shortcut">F11</span></div>
+                        <div class="menu-option" onclick="maximizeAppWindow()">Maximize / Restore Window</div>
+                        <div class="menu-option" onclick="toggleTopologyFullscreen()">Full Screen Topology Canvas <span class="shortcut">Ctrl+M</span></div>
+                        <div class="menu-separator"></div>
+                        <div class="menu-option" onclick="resetTopologyZoom()">Reset Topology Zoom <span class="shortcut">Ctrl+0</span></div>
+                        <div class="menu-option" onclick="autoLayoutTopology()">Auto-Balance Topology Layout</div>
+                        <div class="menu-separator"></div>
+                        <div class="menu-option" onclick="toggleSearchFocus()">Search Devices <span class="shortcut">Ctrl+F</span></div>
+                        <div class="menu-separator"></div>
+                        <div class="menu-option" onclick="pollAll()">Refresh All Data <span class="shortcut">F5</span></div>
+                    </div>
+                </div>
+                <div class="menu-item" tabindex="0">
+                    <span>Network</span>
+                    <div class="menu-dropdown">
+                        <div class="menu-option" onclick="triggerScan()">Rescan Subnet Devices</div>
+                        <div class="menu-option" onclick="openSettingsModal()">Configure Subnet &amp; Ping...</div>
+                        <div class="menu-separator"></div>
+                        <div class="menu-option" onclick="scanSelectedDevicePorts()">Scan Selected Device Ports</div>
+                    </div>
+                </div>
+                <div class="menu-item" tabindex="0">
+                    <span>Monitoring</span>
+                    <div class="menu-dropdown">
+                        <div class="menu-option" onclick="startMonitoring()">Start Continuous Monitoring</div>
+                        <div class="menu-option" onclick="stopMonitoring()">Stop / Pause Monitoring</div>
+                        <div class="menu-separator"></div>
+                        <div class="menu-option" onclick="openLogsModal()">View Live Monitoring Logs</div>
+                    </div>
+                </div>
+                <div class="menu-item" tabindex="0">
+                    <span>Security</span>
+                    <div class="menu-dropdown">
+                        <div class="menu-option" onclick="whitelistSelectedDevice()">Whitelist Selected Device</div>
+                        <div class="menu-option" onclick="resolveAllAlerts()">Dismiss All Resolved Alerts</div>
+                        <div class="menu-separator"></div>
+                        <div class="menu-option" onclick="triggerScan()">Check For Rogue Devices</div>
+                    </div>
+                </div>
+                <div class="menu-item" tabindex="0">
+                    <span>Tools</span>
+                    <div class="menu-dropdown">
+                        <div class="menu-option" onclick="openLogsModal()">Diagnostic Log Console</div>
+                        <div class="menu-option" onclick="scanSelectedDevicePorts()">Port Vulnerability Audit</div>
+                        <div class="menu-separator"></div>
+                        <div class="menu-option" onclick="openSettingsModal()">Preferences &amp; Thresholds...</div>
+                    </div>
+                </div>
+                <div class="menu-item" tabindex="0">
+                    <span>Reports</span>
+                    <div class="menu-dropdown">
+                        <div class="menu-option" onclick="openReportsModal()">Generate Network Health Summary</div>
+                        <div class="menu-option" onclick="triggerExportCSV()">Export CSV Health Log</div>
+                    </div>
+                </div>
+                <div class="menu-item" tabindex="0">
+                    <span>Help</span>
+                    <div class="menu-dropdown">
+                        <div class="menu-option" onclick="openAboutModal()">About IoT Network Monitor</div>
+                        <div class="menu-option" onclick="openAboutModal()">System Architecture &amp; Specifications</div>
+                    </div>
+                </div>
+            </div>
+            <div class="menubar-right">
+                <div class="system-monitor-badge" id="monitor-badge">
+                    <span class="status-dot dot-online" id="status-badge-dot"></span>
+                    <span id="status-badge-text">Monitoring Active</span>
+                </div>
+                <div class="wifi-indicator" title="Wi-Fi Signal Active">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+                        <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+                        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+                        <line x1="12" y1="20" x2="12.01" y2="20"/>
+                    </svg>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- 3. COMMAND TOOLBAR -->
+        <section class="win-toolbar">
+            <div class="toolbar-left">
+                <button class="toolbar-btn btn-primary-fluent" id="btn-scan" onclick="triggerScan()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <span>Scan Network</span>
+                </button>
+                <button class="toolbar-btn btn-success-fluent" id="btn-start-monitor" onclick="startMonitoring()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    <span>Start</span>
+                </button>
+                <button class="toolbar-btn btn-danger-fluent" id="btn-stop-monitor" onclick="stopMonitoring()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="4" y="4" width="16" height="16" rx="2"/>
+                    </svg>
+                    <span>Stop</span>
+                </button>
+                <button class="toolbar-btn btn-warning-fluent" id="btn-reset-all" onclick="resetAllSystem()" title="Reset All Network Monitoring Data & Clear Database">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/>
+                        <path d="M21 3v5h-5"/>
+                        <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+                        <path d="M3 21v-5h5"/>
+                    </svg>
+                    <span>Reset All</span>
+                </button>
+
+                <div class="toolbar-divider"></div>
+
+                <button class="toolbar-btn btn-subtle-fluent" id="btn-toolbar-fullscreen" onclick="toggleAppFullscreen()" title="Toggle Desktop Full Screen (F11)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                    </svg>
+                    <span id="lbl-toolbar-fullscreen">Full Screen</span>
+                </button>
+
+                <button class="toolbar-btn btn-subtle-fluent" onclick="openLogsModal()" title="View System Logs">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                    <span>Logs</span>
+                </button>
+
+                <button class="toolbar-btn btn-subtle-fluent" onclick="openReportsModal()" title="View Analytics &amp; Reports">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10"/>
+                        <line x1="12" y1="20" x2="12" y2="4"/>
+                        <line x1="6" y1="20" x2="6" y2="14"/>
+                    </svg>
+                    <span>Reports</span>
+                </button>
+
+                <button class="toolbar-btn btn-subtle-fluent" onclick="openSettingsModal()" title="Settings &amp; Configuration">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                    <span>Settings</span>
+                </button>
+            </div>
+
+
+            <div class="toolbar-right">
+                <div class="toolbar-info-pill">
+                    <span class="pill-label">Subnet:</span>
+                    <span class="pill-val" id="toolbar-subnet-val">Scanning...</span>
+                </div>
+                <div class="toolbar-info-pill">
+                    <span class="pill-label">Gateway:</span>
+                    <span class="pill-val" id="toolbar-gateway-val">Scanning...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. WORKSPACE MAIN CONTENT (3 TIERS) -->
+        <main class="win-workspace">
+            <!-- TIER 1: TOP 3 PANELS (Network Devices | Topology | Device Details) -->
+            <section class="workspace-row tier-top">
+                <!-- TOP LEFT: NETWORK DEVICES TREE VIEW -->
+                <div class="fluent-panel panel-tree" id="panel-tree-main">
+                    <div class="panel-title-bar">
+                        <div class="panel-title">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                                <line x1="6" y1="6" x2="6.01" y2="6"/>
+                                <line x1="6" y1="18" x2="6.01" y2="18"/>
+                            </svg>
+                            <span>Network Devices</span>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="icon-tool-btn" title="Refresh Tree" onclick="updateDevices()">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-body tree-body" id="devices-tree-container">
+                        <div class="tree-root">
+                            <div class="tree-node tree-folder expanded" onclick="toggleTreeFolder(this)">
+                                <span class="tree-chevron">▾</span>
+                                <span class="tree-icon">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:2px;">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="2" y1="12" x2="22" y2="12"/>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                    </svg>
+                                </span>
+                                <span class="tree-label" id="tree-root-subnet-label">Live Network</span>
+                            </div>
+                            <div class="tree-children" id="tree-device-list">
+                                <!-- Dynamic device items will be inserted here -->
+                                <div class="tree-item loading-text">Discovering real network devices...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOP CENTER: NETWORK TOPOLOGY DIAGRAM -->
+                <div class="fluent-panel panel-topology" id="panel-topology-main">
+                    <div class="panel-title-bar">
+                        <div class="panel-title">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="18" cy="5" r="3"/>
+                                <circle cx="6" cy="12" r="3"/>
+                                <circle cx="18" cy="19" r="3"/>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                            </svg>
+                            <span>Network Topology</span>
+                            <span class="topo-badge" id="topo-adaptive-badge" onclick="toggleTopologyRefModal(true)" title="Click to view Active Topology Reference Architecture" style="cursor: pointer;">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:3px;">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                                </svg>
+                                <span id="topo-adaptive-text">Auto: Star Topology (IEEE 802.11 BSS)</span>
+                                <span class="topo-ref-hint">Ref ℹ️</span>
+                            </span>
+                        </div>
+                        <div class="topology-controls">
+                            <!-- Interaction Mode & Zoom Tools -->
+                            <button class="tool-btn active" id="btn-tool-select" title="Select / Move Node" onclick="setTopologyMode('select')">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="3 3 10 21 14 14 21 10 3 3"/></svg>
+                            </button>
+                            <button class="tool-btn" id="btn-tool-pan" title="Pan Canvas" onclick="setTopologyMode('pan')">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
+                            </button>
+                            <div class="topo-btn-divider"></div>
+                            <button class="tool-btn" title="Zoom In" onclick="zoomTopology(1.15)">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                            </button>
+                            <button class="tool-btn" title="Zoom Out" onclick="zoomTopology(0.85)">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                            </button>
+                            <button class="tool-btn" title="Fit to Screen" onclick="resetTopologyZoom()">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><polyline points="21 15 21 21 15 21"/><polyline points="3 9 3 3 9 3"/></svg>
+                            </button>
+                            <button class="tool-btn" title="Auto Balance Network Layout" onclick="autoLayoutTopology()">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6"/><path d="M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                            </button>
+                            <div class="topo-btn-divider"></div>
+                            <button class="tool-btn" id="btn-topo-ref" title="Network Topology Architecture" onclick="toggleTopologyRefModal(true)">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="16" x2="12" y2="12"/>
+                                    <line x1="12" y1="8" x2="12.01" y2="8"/>
+                                </svg>
+                                <span style="margin-left: 2px;">Topology Info</span>
+                            </button>
+                            <button class="tool-btn" id="btn-topo-fullscreen" title="Expand / Minimize Topology View" onclick="toggleTopologyFullscreen()">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="15 3 21 3 21 9"/>
+                                    <polyline points="9 21 3 21 3 15"/>
+                                    <line x1="21" y1="3" x2="14" y2="10"/>
+                                    <line x1="3" y1="21" x2="10" y2="14"/>
+                                </svg>
+                                <span id="lbl-topo-fullscreen" style="margin-left: 2px;">Expand</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-body topology-body" id="topology-viewport">
+                        <svg id="topology-svg" class="topology-canvas"></svg>
+
+                        <!-- TOPOLOGY ARCHITECTURE REFERENCE INSPECTOR MODAL -->
+                        <div class="topo-ref-modal" id="topo-ref-modal" style="display: none;">
+                            <div class="topo-ref-backdrop" onclick="toggleTopologyRefModal(false)"></div>
+                            <div class="topo-ref-dialog">
+                                <div class="topo-ref-header">
+                                    <div class="topo-ref-title">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0078d4" stroke-width="2">
+                                            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                                        </svg>
+                                        <span>Active Network Topology Architecture Reference</span>
+                                    </div>
+                                    <button class="win-modal-close" onclick="toggleTopologyRefModal(false)" title="Close">✕</button>
+                                </div>
+                                <div class="topo-ref-content">
+                                    <div class="topo-ref-hero">
+                                        <div class="topo-ref-type-badge" id="ref-modal-type">Star Topology (Infrastructure)</div>
+                                        <div class="topo-ref-standard" id="ref-modal-standard">Central Gateway Access Point with Connected Stations</div>
+                                    </div>
+                                    <div class="topo-ref-grid">
+                                        <div class="ref-prop">
+                                            <span class="ref-label">Detection Status</span>
+                                            <span class="ref-val" id="ref-modal-status"><span class="dot dot-online"></span> Live Monitoring Active</span>
+                                        </div>
+                                        <div class="ref-prop">
+                                            <span class="ref-label">Gateway Router</span>
+                                            <span class="ref-val mono" id="ref-modal-hub">172.20.10.1</span>
+                                        </div>
+                                        <div class="ref-prop">
+                                            <span class="ref-label">Connected Stations</span>
+                                            <span class="ref-val" id="ref-modal-clients">Active Clients</span>
+                                        </div>
+                                        <div class="ref-prop">
+                                            <span class="ref-label">Network Interface</span>
+                                            <span class="ref-val" id="ref-modal-medium">Local Subnet Interface</span>
+                                        </div>
+                                        <div class="ref-prop full-width">
+                                            <span class="ref-label">Network Architecture Summary</span>
+                                            <div class="ref-val desc" id="ref-modal-desc">
+                                                All station traffic routes directly through the central default gateway. In local area networks, this establishes an infrastructure star architecture.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="topo-ref-switch-box">
+                                        <div class="ref-switch-header">
+                                            <span>Topology Layout View:</span>
+                                            <span class="ref-switch-tip">(Organize canvas layout for active network stations)</span>
+                                        </div>
+                                        <div class="topo-switch-btns">
+                                            <button class="topo-pill-btn active" id="btn-topoview-auto" onclick="switchTopologyType('auto')">Default (Star)</button>
+                                            <button class="topo-pill-btn" id="btn-topoview-star" onclick="switchTopologyType('star')">Star</button>
+                                            <button class="topo-pill-btn" id="btn-topoview-tree" onclick="switchTopologyType('tree')">Tree</button>
+                                            <button class="topo-pill-btn" id="btn-topoview-mesh" onclick="switchTopologyType('mesh')">Mesh</button>
+                                            <button class="topo-pill-btn" id="btn-topoview-ring" onclick="switchTopologyType('ring')">Ring</button>
+                                            <button class="topo-pill-btn" id="btn-topoview-bus" onclick="switchTopologyType('bus')">Bus</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOP RIGHT: DEVICE DETAILS -->
+                <div class="fluent-panel panel-details" id="panel-details-main">
+                    <div class="panel-title-bar">
+                        <div class="panel-title">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="4" y="4" width="16" height="16" rx="2"/>
+                                <rect x="9" y="9" width="6" height="6"/>
+                                <line x1="9" y1="1" x2="9" y2="4"/>
+                                <line x1="15" y1="1" x2="15" y2="4"/>
+                            </svg>
+                            <span>Device Details</span>
+                        </div>
+                        <div class="panel-actions">
+                            <span class="status-pill online" id="details-header-status">Online</span>
+                        </div>
+                    </div>
+                    <div class="panel-body details-body">
+                        <!-- Header banner of selected device -->
+                        <div class="device-summary-header">
+                            <div class="device-avatar" id="details-avatar">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                                    <rect x="9" y="9" width="6" height="6"/>
+                                </svg>
+                            </div>
+                            <div class="device-meta-header">
+                                <h3 id="details-dev-name">ESP32 Node</h3>
+                                <p id="details-dev-ip">192.168.1.50</p>
+                            </div>
+                        </div>
+
+                        <!-- Fluent Tabs -->
+                        <div class="fluent-tabs">
+                            <button class="tab-btn active" onclick="switchDetailsTab('general', this)">General</button>
+                            <button class="tab-btn" onclick="switchDetailsTab('network', this)">Network</button>
+                            <button class="tab-btn" onclick="switchDetailsTab('telemetry', this)">Telemetry</button>
+                            <button class="tab-btn" onclick="switchDetailsTab('history', this)">History</button>
+                        </div>
+
+                        <!-- Tab Content 1: General -->
+                        <div class="tab-pane active" id="tab-general">
+                            <div class="property-grid">
+                                <div class="prop-row">
+                                    <span class="prop-label">Device Name</span>
+                                    <span class="prop-value" id="prop-name">ESP32 Node</span>
+                                </div>
+                                <div class="prop-row">
+                                    <span class="prop-label">IP Address</span>
+                                    <span class="prop-value mono" id="prop-ip">192.168.1.50</span>
+                                </div>
+                                <div class="prop-row">
+                                    <span class="prop-label">MAC Address</span>
+                                    <span class="prop-value mono" id="prop-mac">24:6F:28:3A:7C:91</span>
+                                </div>
+                                <div class="prop-row">
+                                    <span class="prop-label">Device Type</span>
+                                    <span class="prop-value" id="prop-type">IoT Node (ESP32)</span>
+                                </div>
+                                <div class="prop-row">
+                                    <span class="prop-label">Vendor</span>
+                                    <span class="prop-value" id="prop-vendor">Espressif Systems</span>
+                                </div>
+                                <div class="prop-row">
+                                    <span class="prop-label">Status</span>
+                                    <span class="prop-value" id="prop-status"><span class="dot dot-online"></span> Online</span>
+                                </div>
+                                <div class="prop-row">
+                                    <span class="prop-label">Trust State</span>
+                                    <span class="prop-value" id="prop-trust">Whitelisted</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content 2: Network -->
+                        <div class="tab-pane" id="tab-network">
+                            <div class="property-grid">
+                                <div class="prop-row">
+                                    <span class="prop-label">Subnet</span>
+                                    <span class="prop-value mono" id="prop-subnet">—</span>
+                                </div>
+                                <div class="prop-row">
+                                    <span class="prop-label">Default Gateway</span>
+                                    <span class="prop-value mono" id="prop-gateway">—</span>
+                                </div>
+                                <div class="prop-row">
+                                    <span class="prop-label">Latency</span>
+                                    <span class="prop-value mono" id="prop-latency">—</span>
+                                </div>
+                                <div class="prop-row">
+                                    <span class="prop-label">Packet Loss</span>
+                                    <span class="prop-value mono" id="prop-loss">—</span>
+                                </div>
+                                <div class="prop-row">
+                                    <span class="prop-label">Jitter</span>
+                                    <span class="prop-value mono" id="prop-jitter">—</span>
+                                </div>
+                                <div class="prop-row">
+                                    <span class="prop-label">Last Checked</span>
+                                    <span class="prop-value" id="prop-last-seen">Just now</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content 3: Telemetry (Live Hardware Metrics) -->
+                        <div class="tab-pane" id="tab-telemetry">
+                            <div id="telemetry-container">
+                                <div class="telemetry-card telemetry-source-card">
+                                    <div class="telemetry-metric-title">
+                                        <span class="telemetry-source-badge" id="telemetry-source-badge">Live Hardware Stream</span>
+                                        <span class="telemetry-val" id="telemetry-source-node" style="font-weight: 600; font-size: 13px; color: var(--accent);">Synchronizing...</span>
+                                    </div>
+                                </div>
+
+                                <div class="telemetry-card">
+                                    <div class="telemetry-metric-title">
+                                        <span>Wi-Fi Signal (RSSI)</span>
+                                        <span class="telemetry-val" id="telemetry-rssi">—</span>
+                                    </div>
+                                    <div class="fluent-progress">
+                                        <div class="fluent-progress-fill" id="rssi-bar" style="width: 0%; background: #107c41;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="telemetry-card">
+                                    <div class="telemetry-metric-title">
+                                        <span id="telemetry-heap-label">Free Memory</span>
+                                        <span class="telemetry-val" id="telemetry-heap">—</span>
+                                    </div>
+                                    <div class="fluent-progress">
+                                        <div class="fluent-progress-fill" id="heap-bar" style="width: 0%; background: #0067c0;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="telemetry-card">
+                                    <div class="telemetry-metric-title">
+                                        <span>Active Uptime</span>
+                                        <span class="telemetry-val" id="telemetry-uptime">—</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content 4: History -->
+                        <div class="tab-pane" id="tab-history">
+                            <div class="mini-history-list" id="mini-history-items">
+                                <div class="history-item">
+                                    <span class="time-label">Recent</span>
+                                    <span class="metric-tag">Latency: 10.6ms</span>
+                                    <span class="metric-tag">Loss: 0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TIER 2: MIDDLE DISCOVERED DEVICES TABLE (FULL WIDTH) -->
+            <section class="workspace-row tier-mid">
+                <div class="fluent-panel panel-devices-table" id="panel-devices-main">
+                    <div class="panel-title-bar">
+                        <div class="panel-title">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                            <span>Discovered Devices</span>
+                            <span class="table-count-badge" id="devices-count-badge">0 Devices</span>
+                        </div>
+                        <div class="table-actions">
+                            <div class="fluent-search-box">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                <input type="text" id="device-search-input" placeholder="Search devices..." oninput="filterDeviceTable()">
+                            </div>
+                            <button class="icon-tool-btn" title="Refresh Table" onclick="updateDevices()">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-body table-scroll-container">
+                        <table class="fluent-table" id="devices-grid">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px;">#</th>
+                                    <th>Device Name</th>
+                                    <th>IP Address</th>
+                                    <th>MAC Address</th>
+                                    <th>Vendor</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Latency (ms)</th>
+                                    <th>Packet Loss (%)</th>
+                                    <th>Jitter (ms)</th>
+                                    <th style="text-align: center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="devices-table-body">
+                                <tr>
+                                    <td colspan="11" class="table-empty-row">
+                                        <div class="fluent-spinner"></div>
+                                        <span>Discovering local network devices...</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- NATIVE MOBILE DEVICE CARDS CONTAINER -->
+                    <div class="panel-body mobile-cards-container" id="devices-mobile-cards-wrap">
+                        <div class="devices-mobile-cards-list" id="devices-mobile-cards">
+                            <!-- Cards dynamically generated for smartphone view -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TIER 3: BOTTOM 3 PANELS (Security Alerts | Network Metrics Chart | Port Check) -->
+            <section class="workspace-row tier-bottom">
+                <!-- BOTTOM LEFT: SECURITY ALERTS -->
+                <div class="fluent-panel panel-alerts" id="panel-alerts-main">
+                    <div class="panel-title-bar">
+                        <div class="panel-title">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#d13438" stroke-width="2.2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            <span>Security Alerts</span>
+                            <span class="alert-count-pill" id="alerts-count-badge">0</span>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="fluent-link-btn" onclick="resolveAllAlerts()">Clear All</button>
+                        </div>
+                    </div>
+                    <div class="panel-body alerts-scroll-container" id="alerts-list-body">
+                        <div class="alerts-empty-state">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#107c41" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            <span>No active security threats detected</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOTTOM CENTER: NETWORK METRICS CHART -->
+                <div class="fluent-panel panel-metrics" id="panel-metrics-main">
+                    <div class="panel-title-bar">
+                        <div class="panel-title">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                            <span id="chart-panel-title">Network Metrics (ESP32 Node)</span>
+                        </div>
+                        <div class="chart-header-controls">
+                            <div class="chart-metric-selector">
+                                <button class="metric-tab-btn active" onclick="setChartMetric('latency', this)">Latency</button>
+                                <button class="metric-tab-btn" onclick="setChartMetric('loss', this)">Packet Loss</button>
+                                <button class="metric-tab-btn" onclick="setChartMetric('jitter', this)">Jitter</button>
+                            </div>
+                            <select class="fluent-select-sm" id="chart-range-select" onchange="changeChartRange(this.value)">
+                                <option value="10">Last 10 Samples</option>
+                                <option value="25" selected>Last 25 Samples</option>
+                                <option value="50">Last 50 Samples</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="panel-body chart-body">
+                        <div class="chart-canvas-wrapper">
+                            <canvas id="health-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOTTOM RIGHT: PORT SCAN RESULTS -->
+                <div class="fluent-panel panel-ports" id="panel-ports-main">
+                    <div class="panel-title-bar">
+                        <div class="panel-title">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="3"/>
+                                <circle cx="8" cy="8" r="1.5"/>
+                                <circle cx="16" cy="8" r="1.5"/>
+                                <circle cx="8" cy="16" r="1.5"/>
+                                <circle cx="16" cy="16" r="1.5"/>
+                            </svg>
+                            <span id="ports-panel-title">Port Check (ESP32 Node)</span>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="fluent-link-btn" onclick="scanSelectedDevicePorts()">Scan Ports</button>
+                        </div>
+                    </div>
+                    <div class="panel-body ports-scroll-container">
+                        <table class="fluent-table ports-table">
+                            <thead>
+                                <tr>
+                                    <th>Port</th>
+                                    <th>State</th>
+                                    <th>Service</th>
+                                    <th>Security</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ports-table-body">
+                                <tr>
+                                    <td class="mono font-semibold">22</td>
+                                    <td><span class="port-dot dot-closed"></span> Closed</td>
+                                    <td>SSH</td>
+                                    <td><span class="badge-subtle">Authorized</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="mono font-semibold">23</td>
+                                    <td><span class="port-dot dot-closed"></span> Closed</td>
+                                    <td>Telnet</td>
+                                    <td><span class="badge-warning">Restricted</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="mono font-semibold">80</td>
+                                    <td><span class="port-dot dot-open"></span> Open</td>
+                                    <td>HTTP</td>
+                                    <td><span class="badge-subtle">Authorized</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="mono font-semibold">443</td>
+                                    <td><span class="port-dot dot-closed"></span> Closed</td>
+                                    <td>HTTPS</td>
+                                    <td><span class="badge-subtle">Authorized</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="mono font-semibold">1883</td>
+                                    <td><span class="port-dot dot-closed"></span> Closed</td>
+                                    <td>MQTT</td>
+                                    <td><span class="badge-subtle">Authorized</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="mono font-semibold">8080</td>
+                                    <td><span class="port-dot dot-open"></span> Open</td>
+                                    <td>HTTP-Alt</td>
+                                    <td><span class="badge-subtle">Authorized</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 5. WINDOW STATUS BAR (FOOTER) -->
+        <footer class="win-statusbar">
+            <div class="status-left">
+                <div class="status-segment"><span class="dot dot-online"></span> Online: <strong id="sb-online">0</strong></div>
+                <div class="status-segment"><span class="dot dot-degraded"></span> Degraded: <strong id="sb-degraded">0</strong></div>
+                <div class="status-segment"><span class="dot dot-offline"></span> Offline: <strong id="sb-offline">0</strong></div>
+                <div class="status-divider"></div>
+                <div class="status-segment">Total Devices: <strong id="sb-total">0</strong></div>
+                <div class="status-divider"></div>
+                <div class="status-segment">Avg Latency: <strong id="sb-avg-lat">0.0 ms</strong></div>
+            </div>
+            <div class="status-right">
+                <div class="status-segment" id="sb-stream-status" title="Server-Sent Events Connection State">
+                    <span class="dot dot-online" id="sb-stream-dot"></span> <strong id="sb-stream-text">Live Push</strong>
+                </div>
+                <div class="status-divider"></div>
+                <div class="status-segment" id="sb-last-scan">Last Scan: Just now</div>
+                <div class="status-divider"></div>
+                <div class="status-segment">Subnet: <strong id="sb-subnet-val">Detecting...</strong></div>
+                <div class="status-divider"></div>
+                <div class="status-segment" id="sb-clock">12:00:00 PM</div>
+            </div>
+        </footer>
+
+        <!-- MOBILE NATIVE BOTTOM NAVIGATION -->
+        <nav class="mobile-bottom-nav">
+            <button class="mob-tab-btn active" data-tab="topology" onclick="switchMobileTab('topology')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <circle cx="18" cy="5" r="3"/>
+                    <circle cx="6" cy="12" r="3"/>
+                    <circle cx="18" cy="19" r="3"/>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                </svg>
+                <span>Topology</span>
+            </button>
+            <button class="mob-tab-btn" data-tab="devices" onclick="switchMobileTab('devices')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                    <line x1="6" y1="6" x2="6.01" y2="6"/>
+                    <line x1="6" y1="18" x2="6.01" y2="18"/>
+                </svg>
+                <span>Devices (<span id="mob-nav-dev-count">4</span>)</span>
+            </button>
+            <button class="mob-tab-btn" data-tab="metrics" onclick="switchMobileTab('metrics')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+                <span>Metrics</span>
+            </button>
+            <button class="mob-tab-btn" data-tab="security" onclick="switchMobileTab('security')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>Security</span>
+            </button>
+            <button class="mob-tab-btn" data-tab="details" onclick="switchMobileTab('details')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                    <rect x="9" y="9" width="6" height="6"/>
+                    <line x1="9" y1="1" x2="9" y2="4"/>
+                    <line x1="15" y1="1" x2="15" y2="4"/>
+                </svg>
+                <span>Details</span>
+            </button>
+        </nav>
+
+        <!-- MOBILE QUICK TOPOLOGY NODE PREVIEW SHEET -->
+        <div class="mob-topo-sheet" id="mob-topo-sheet">
+            <div class="mob-sheet-handle"></div>
+            <div class="mob-sheet-body">
+                <div class="mob-sheet-left">
+                    <img id="mob-sheet-icon" src="/static/img/pc.svg" class="mob-sheet-img" alt="" />
+                    <div class="mob-sheet-titles">
+                        <h4 id="mob-sheet-name">Device Name</h4>
+                        <p><span class="mono" id="mob-sheet-ip">172.20.10.x</span> • <span class="status-pill online" id="mob-sheet-status">Online</span></p>
+                    </div>
+                </div>
+                <button class="mob-sheet-details-btn" onclick="openDetailsTabForSelected()">
+                    <span>Inspect</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- MOBILE SLIDE-OVER DRAWER -->
+        <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop" onclick="toggleMobileDrawer(false)"></div>
+        <aside class="mobile-drawer" id="mobile-drawer">
+            <div class="drawer-header">
+                <div class="drawer-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+                    <span>System Controls</span>
+                </div>
+                <button class="drawer-close-btn" onclick="toggleMobileDrawer(false)">✕</button>
+            </div>
+            <div class="drawer-content">
+                <div class="drawer-section-title">Network Operations</div>
+                <button class="drawer-action-btn primary" onclick="triggerScan(); toggleMobileDrawer(false);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <span>Scan Subnet Devices</span>
+                </button>
+                <button class="drawer-action-btn" onclick="startMonitoring(); toggleMobileDrawer(false);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <span>Start Live Monitoring</span>
+                </button>
+                <button class="drawer-action-btn" onclick="stopMonitoring(); toggleMobileDrawer(false);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+                    <span>Stop Monitoring</span>
+                </button>
+                <button class="drawer-action-btn" style="color: #b45309;" onclick="resetAllSystem(); toggleMobileDrawer(false);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>
+                    <span>Reset Entire System</span>
+                </button>
+
+                <div class="drawer-divider"></div>
+
+                <div class="drawer-section-title">Diagnostics &amp; Tools</div>
+                <button class="drawer-action-btn" onclick="openLogsModal(); toggleMobileDrawer(false);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span>Diagnostic Log Console</span>
+                </button>
+                <button class="drawer-action-btn" onclick="openReportsModal(); toggleMobileDrawer(false);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    <span>Health Summary Report</span>
+                </button>
+                <button class="drawer-action-btn" onclick="triggerExportCSV(); toggleMobileDrawer(false);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Export CSV Health Log</span>
+                </button>
+                <button class="drawer-action-btn" onclick="openSettingsModal(); toggleMobileDrawer(false);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>Preferences &amp; Settings</span>
+                </button>
+
+                <div class="drawer-divider"></div>
+
+                <button class="drawer-action-btn" onclick="openAboutModal(); toggleMobileDrawer(false);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <span>About IoT System</span>
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- MODAL DIALOG: LOGS VIEWER -->
+    <div class="win-modal-backdrop" id="modal-logs" onclick="handleBackdropClick(event, 'modal-logs')">
+        <div class="win-dialog">
+            <div class="dialog-titlebar">
+                <span>System &amp; Network Activity Logs</span>
+                <button class="dialog-close-btn" onclick="closeModal('modal-logs')">✕</button>
+            </div>
+            <div class="dialog-content">
+                <div class="log-console" id="log-console-text">
+[SYSTEM] Initializing event log stream...
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button class="fluent-btn" onclick="clearLogsConsole()">Clear Console</button>
+                <button class="fluent-btn fluent-btn-primary" onclick="closeModal('modal-logs')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DIALOG: REPORTS & SUMMARY -->
+    <div class="win-modal-backdrop" id="modal-reports" onclick="handleBackdropClick(event, 'modal-reports')">
+        <div class="win-dialog">
+            <div class="dialog-titlebar">
+                <span>Network Health &amp; Security Report</span>
+                <button class="dialog-close-btn" onclick="closeModal('modal-reports')">✕</button>
+            </div>
+            <div class="dialog-content">
+                <div class="report-section">
+                    <h4>Executive Summary</h4>
+                    <p>Current operational health and telemetry for local subnet (<span id="rep-subnet-val">Scanning...</span>):</p>
+                    <div class="report-stats-grid">
+                        <div class="report-stat-card">
+                            <span class="report-stat-val" id="rep-total">0</span>
+                            <span class="report-stat-lbl">Discovered Nodes</span>
+                        </div>
+                        <div class="report-stat-card">
+                            <span class="report-stat-val" id="rep-online" style="color: #107c41;">0</span>
+                            <span class="report-stat-lbl">Online Devices</span>
+                        </div>
+                        <div class="report-stat-card">
+                            <span class="report-stat-val" id="rep-latency" style="color: #0067c0;">0 ms</span>
+                            <span class="report-stat-lbl">Mean Latency</span>
+                        </div>
+                        <div class="report-stat-card">
+                            <span class="report-stat-val" id="rep-alerts" style="color: #d13438;">0</span>
+                            <span class="report-stat-lbl">Active Alerts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button class="fluent-btn" onclick="triggerExportCSV()">Export CSV</button>
+                <button class="fluent-btn fluent-btn-primary" onclick="closeModal('modal-reports')">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DIALOG: SETTINGS -->
+    <div class="win-modal-backdrop" id="modal-settings" onclick="handleBackdropClick(event, 'modal-settings')">
+        <div class="win-dialog">
+            <div class="dialog-titlebar">
+                <span>Configuration &amp; Monitoring Settings</span>
+                <button class="dialog-close-btn" onclick="closeModal('modal-settings')">✕</button>
+            </div>
+            <div class="dialog-content">
+                <div class="settings-form">
+                    <div class="form-row">
+                        <label>Subnet CIDR Range</label>
+                        <input type="text" class="fluent-input" id="cfg-subnet" value="172.20.10.0/24">
+                    </div>
+                    <div class="form-row">
+                        <label>Health Ping Interval (seconds)</label>
+                        <input type="number" class="fluent-input" id="cfg-ping-interval" value="10">
+                    </div>
+                    <div class="form-row">
+                        <label>Ping Burst Count per Host</label>
+                        <input type="number" class="fluent-input" id="cfg-ping-count" value="5">
+                    </div>
+                    <div class="form-row">
+                        <label>Degraded Loss Threshold (%)</label>
+                        <input type="number" class="fluent-input" id="cfg-loss-threshold" value="20">
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button class="fluent-btn" onclick="closeModal('modal-settings')">Cancel</button>
+                <button class="fluent-btn fluent-btn-primary" onclick="saveSettingsForm()">Save &amp; Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DIALOG: ABOUT -->
+    <div class="win-modal-backdrop" id="modal-about" onclick="handleBackdropClick(event, 'modal-about')">
+        <div class="win-dialog" style="max-width: 440px;">
+            <div class="dialog-titlebar">
+                <span>About IoT Network Monitor</span>
+                <button class="dialog-close-btn" onclick="closeModal('modal-about')">✕</button>
+            </div>
+            <div class="dialog-content" style="text-align: center; padding: 24px 16px;">
+                <div class="about-logo" style="margin-bottom: 12px; color: #0067c0;">
+                    <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="2.5"/>
+                        <path d="M16.24 7.76a6 6 0 0 1 0 8.49"/>
+                        <path d="M7.76 16.24a6 6 0 0 1 0-8.49"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                        <path d="M4.93 19.07a10 10 0 0 1 0-14.14"/>
+                    </svg>
+                </div>
+                <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">IoT Network Health &amp; Security Monitor</h3>
+                <p style="color: #64748b; font-size: 12px; margin-bottom: 14px;">Production Network Health &amp; Security Monitor</p>
+                <p style="font-size: 13px; line-height: 1.5; color: #334155; margin-bottom: 16px;">
+                    Real-time local network station discovery, live ICMP health telemetry, port vulnerability auditing, and security anomaly detection for connected workstations and IoT nodes.
+                </p>
+                <div style="font-size: 11px; color: #94a3b8;">Enterprise IoT &amp; Network Health Monitor</div>
+            </div>
+            <div class="dialog-footer" style="justify-content: center;">
+                <button class="fluent-btn fluent-btn-primary" onclick="closeModal('modal-about')">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DIALOG: ADMIN AUTHENTICATION -->
+    <div class="win-modal-backdrop" id="modal-auth" onclick="handleBackdropClick(event, 'modal-auth')">
+        <div class="win-dialog" style="max-width: 400px;">
+            <div class="dialog-titlebar">
+                <span>🔐 Admin Authentication</span>
+                <button class="dialog-close-btn" onclick="closeModal('modal-auth')">✕</button>
+            </div>
+            <div class="dialog-content" style="padding: 20px 24px;">
+                <p style="font-size: 13px; color: #475569; margin-bottom: 16px;">
+                    Enter your administrative credentials to manage privileged network controls.
+                </p>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">Username</label>
+                    <input type="text" id="auth-username" class="fluent-input" style="width: 100%; box-sizing: border-box;" value="admin" placeholder="Admin username">
+                </div>
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">Password</label>
+                    <input type="password" id="auth-password" class="fluent-input" style="width: 100%; box-sizing: border-box;" placeholder="Enter password">
+                </div>
+                <div id="auth-error-msg" style="display: none; color: #ef4444; font-size: 12px; margin-bottom: 10px;"></div>
+            </div>
+            <div class="dialog-footer">
+                <button class="fluent-btn" onclick="closeModal('modal-auth')">Cancel</button>
+                <button class="fluent-btn fluent-btn-primary" onclick="submitAdminLogin()">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DIALOG: ASSIGN DEVICES TO ROUTER -->
+    <div class="win-modal-backdrop" id="modal-assign-devices" onclick="handleBackdropClick(event, 'modal-assign-devices')">
+        <div class="win-dialog" style="max-width: 540px;">
+            <div class="dialog-titlebar">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                    </svg>
+                    <span>Assign Connected Devices to Router</span>
+                </div>
+                <button class="dialog-close-btn" onclick="closeModal('modal-assign-devices')">✕</button>
+            </div>
+            <div class="dialog-content">
+                <div class="assign-router-header" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px 14px; margin-bottom:12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <div style="font-size:13.5px; font-weight:600; color:#0f172a;" id="assign-modal-router-name">Selected Router</div>
+                            <div style="font-size:11px; color:#64748b; margin-top:2px;" id="assign-modal-router-meta">Vendor: Unknown • BSSID: Unknown</div>
+                        </div>
+                        <span class="badge" id="assign-modal-router-status" style="background:#e0f2fe; color:#0369a1; font-weight:600; padding:2px 8px; border-radius:12px; font-size:11px;">Active</span>
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span style="font-weight:600; color:#334155; font-size:12px;">Select devices connected to this router:</span>
+                    <div style="display:flex; gap:6px;">
+                        <button class="fluent-btn-mini" onclick="selectAllAssignDevices(true)">Select All</button>
+                        <button class="fluent-btn-mini" onclick="selectAllAssignDevices(false)">Clear</button>
+                    </div>
+                </div>
+
+                <div class="assign-devices-list" id="assign-devices-list-container" style="max-height: 260px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px; background:#ffffff;">
+                    <div style="padding: 16px; text-align: center; color: #64748b;">Loading network devices...</div>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button class="fluent-btn" onclick="closeModal('modal-assign-devices')">Cancel</button>
+                <button class="fluent-btn fluent-btn-primary" id="btn-save-device-assignment" onclick="saveDeviceAssignment()">Save &amp; Link Devices</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DIALOG: ADD CUSTOM ROUTER -->
+    <div class="win-modal-backdrop" id="modal-custom-router" onclick="handleBackdropClick(event, 'modal-custom-router')">
+        <div class="win-dialog" style="max-width: 440px;">
+            <div class="dialog-titlebar">
+                <span>Add Custom / External Router</span>
+                <button class="dialog-close-btn" onclick="closeModal('modal-custom-router')">✕</button>
+            </div>
+            <div class="dialog-content">
+                <p style="font-size:12px; color:#64748b; margin-bottom:12px;">Add another router or Wi-Fi network manually to visualize its topology and map connected devices.</p>
+                <div class="settings-form">
+                    <div class="form-row">
+                        <label>Router / Network Name (SSID)</label>
+                        <input type="text" class="fluent-input" id="custom-router-ssid" placeholder="e.g. LivingRoom_Router or D-Link_Office">
+                    </div>
+                    <div class="form-row">
+                        <label>Router Brand / Vendor</label>
+                        <input type="text" class="fluent-input" id="custom-router-vendor" placeholder="e.g. TP-Link, Cisco, D-Link, Netgear" value="Generic Router">
+                    </div>
+                    <div class="form-row">
+                        <label>Gateway / Subnet IP (Optional)</label>
+                        <input type="text" class="fluent-input" id="custom-router-ip" placeholder="e.g. 192.168.1.1" value="192.168.1.1">
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button class="fluent-btn" onclick="closeModal('modal-custom-router')">Cancel</button>
+                <button class="fluent-btn fluent-btn-primary" onclick="submitCustomRouter()">Add Router</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="/static/js/topology.js?v={{ cache_bust }}"></script>
+    <script src="/static/js/charts.js?v={{ cache_bust }}"></script>
+    <script src="/static/js/dashboard.js?v={{ cache_bust }}"></script>
+</body>
+</html>

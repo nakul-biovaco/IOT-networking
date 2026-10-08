@@ -1,0 +1,229 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%">
+  <defs>
+    <!-- PCB Dark Solder Mask -->
+    <linearGradient id="pcbGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1A202C" />
+      <stop offset="50%" stop-color="#141821" />
+      <stop offset="100%" stop-color="#0E1217" />
+    </linearGradient>
+
+    <!-- Metal RF Shield Gradient -->
+    <linearGradient id="rfShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E2E8F0" />
+      <stop offset="30%" stop-color="#CBD5E1" />
+      <stop offset="70%" stop-color="#94A3B8" />
+      <stop offset="100%" stop-color="#64748B" />
+    </linearGradient>
+
+    <!-- Gold Pin Plating -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="50%" stop-color="#EAB308" />
+      <stop offset="100%" stop-color="#CA8A04" />
+    </linearGradient>
+
+    <!-- Copper Antenna Trace Gradient -->
+    <linearGradient id="copperGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+
+    <!-- USB Port Metal -->
+    <linearGradient id="usbGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#CBD5E1" />
+      <stop offset="50%" stop-color="#94A3B8" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+
+    <!-- LED Glow Filters -->
+    <filter id="pwrGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="wifiGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="espShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000000" flood-opacity="0.45" />
+    </filter>
+  </defs>
+
+  <!-- Ground Shadow -->
+  <ellipse cx="64" cy="115" rx="38" ry="7" fill="#000000" opacity="0.38" filter="blur(3.5px)" />
+
+  <!-- ================= DUAL ROW HEADER PINS (15 PINS EACH SIDE) ================= -->
+  <!-- Left Header Pins (Protruding Gold Solder Pins) -->
+  <g id="left-pins">
+    <!-- Outer pin legs -->
+    <rect x="23" y="27" width="6" height="74" fill="#1E293B" rx="1" />
+    <!-- 15 Pin Dots -->
+    <circle cx="26" cy="30" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="35" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="40" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="45" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="50" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="55" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="60" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="65" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="70" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="75" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="80" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="85" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="90" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="26" cy="95" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+  </g>
+
+  <!-- Right Header Pins -->
+  <g id="right-pins">
+    <!-- Outer pin legs -->
+    <rect x="99" y="27" width="6" height="74" fill="#1E293B" rx="1" />
+    <!-- 15 Pin Dots -->
+    <circle cx="102" cy="30" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="35" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="40" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="45" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="50" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="55" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="60" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="65" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="70" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="75" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="80" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="85" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="90" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+    <circle cx="102" cy="95" r="1.6" fill="url(#goldGrad)" stroke="#78350F" stroke-width="0.4" />
+  </g>
+
+  <!-- ================= MAIN PCB BOARD ================= -->
+  <g id="main-board" filter="url(#espShadow)">
+    <!-- Dark Matte Fiberglass Board -->
+    <rect x="28" y="12" width="72" height="98" rx="4.5" fill="url(#pcbGrad)" stroke="#334155" stroke-width="1.2" />
+
+    <!-- Corner Mounting Holes -->
+    <circle cx="33" cy="17" r="2.2" fill="#0A0E14" stroke="#64748B" stroke-width="0.8" />
+    <circle cx="95" cy="17" r="2.2" fill="#0A0E14" stroke="#64748B" stroke-width="0.8" />
+    <circle cx="33" cy="103" r="2.2" fill="#0A0E14" stroke="#64748B" stroke-width="0.8" />
+    <circle cx="95" cy="103" r="2.2" fill="#0A0E14" stroke="#64748B" stroke-width="0.8" />
+
+    <!-- White Silkscreen Board Margins -->
+    <rect x="35" y="19" width="58" height="84" rx="2" fill="none" stroke="#FFFFFF" stroke-width="0.5" opacity="0.3" />
+
+    <!-- Pin Headers Inner Silkscreen Labels / Legend -->
+    <text x="32" y="28" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">3V3</text>
+    <text x="32" y="34" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">EN</text>
+    <text x="32" y="40" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">VP</text>
+    <text x="32" y="46" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">VN</text>
+    <text x="32" y="52" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D34</text>
+    <text x="32" y="58" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D35</text>
+    <text x="32" y="64" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D32</text>
+    <text x="32" y="70" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D33</text>
+    <text x="32" y="76" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D25</text>
+    <text x="32" y="82" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D26</text>
+    <text x="32" y="88" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D27</text>
+    <text x="32" y="94" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">GND</text>
+
+    <text x="90" y="28" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">GND</text>
+    <text x="90" y="34" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D23</text>
+    <text x="90" y="40" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D22</text>
+    <text x="90" y="46" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">TX0</text>
+    <text x="90" y="52" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">RX0</text>
+    <text x="90" y="58" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D21</text>
+    <text x="90" y="64" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D19</text>
+    <text x="90" y="70" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D18</text>
+    <text x="90" y="76" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">D5</text>
+    <text x="90" y="82" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">TX2</text>
+    <text x="90" y="88" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">RX2</text>
+    <text x="90" y="94" font-family="monospace" font-size="2.4" font-weight="700" fill="#94A3B8">VIN</text>
+
+    <!-- ================= ESP-WROOM-32 MODULE ================= -->
+    <!-- Module Carrier Board (PCB on PCB) -->
+    <rect x="42" y="16" width="44" height="48" rx="2.5" fill="#111827" stroke="#334155" stroke-width="0.8" />
+
+    <!-- Inverted-F Wi-Fi & Bluetooth Antenna Copper Trace at Top -->
+    <rect x="44" y="18" width="40" height="9" fill="#181308" />
+    <path d="M 46 25 L 82 25 M 46 22 L 54 22 L 54 25 M 60 22 L 68 22 L 68 25 M 74 22 L 82 22 L 82 25" stroke="url(#copperGrad)" stroke-width="1.3" stroke-linecap="square" />
+
+    <!-- Metal RF Shield Can -->
+    <rect x="44" y="29" width="40" height="33" rx="1.8" fill="url(#rfShieldGrad)" stroke="#475569" stroke-width="0.8" />
+    <!-- Shield Bevel Inner Inset -->
+    <rect x="45.5" y="30.5" width="37" height="30" rx="1" fill="none" stroke="#FFFFFF" stroke-width="0.4" opacity="0.4" />
+
+    <!-- Espressif & ESP32 Laser Stamping on Metal Shield -->
+    <text x="64" y="37" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="3.2" font-weight="800" text-anchor="middle" fill="#1E293B">ESPRESSIF</text>
+    <text x="64" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="4.5" font-weight="900" text-anchor="middle" fill="#0F172A">ESP32</text>
+    <text x="64" y="49" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="2.6" font-weight="700" text-anchor="middle" fill="#334155">ESP-WROOM-32</text>
+    <text x="64" y="54" font-family="monospace" font-size="2.1" text-anchor="middle" fill="#475569">FCC ID: 2AC7Z-ESPWROOM32</text>
+
+    <!-- Wi-Fi & Bluetooth Mini Logo on Shield -->
+    <circle cx="50" cy="58" r="1.4" fill="none" stroke="#334155" stroke-width="0.5" />
+    <circle cx="50" cy="58" r="0.6" fill="#334155" />
+    <circle cx="78" cy="58" r="1.4" fill="none" stroke="#334155" stroke-width="0.5" />
+    <circle cx="78" cy="58" r="0.6" fill="#334155" />
+
+    <!-- ================= ON-BOARD ICs & COMPONENTS ================= -->
+    <!-- CP2102 / CH340 USB-to-UART Bridge IC (QFN-28) -->
+    <rect x="58" y="70" width="12" height="12" rx="0.8" fill="#111827" stroke="#475569" stroke-width="0.6" />
+    <!-- IC Pin Leads -->
+    <line x1="56.5" y1="73" x2="58" y2="73" stroke="url(#goldGrad)" stroke-width="0.6" />
+    <line x1="56.5" y1="76" x2="58" y2="76" stroke="url(#goldGrad)" stroke-width="0.6" />
+    <line x1="56.5" y1="79" x2="58" y2="79" stroke="url(#goldGrad)" stroke-width="0.6" />
+    <line x1="70" y1="73" x2="71.5" y2="73" stroke="url(#goldGrad)" stroke-width="0.6" />
+    <line x1="70" y1="76" x2="71.5" y2="76" stroke="url(#goldGrad)" stroke-width="0.6" />
+    <line x1="70" y1="79" x2="71.5" y2="79" stroke="url(#goldGrad)" stroke-width="0.6" />
+    <!-- IC Dot Marker -->
+    <circle cx="60.5" cy="72.5" r="0.6" fill="#FFFFFF" opacity="0.6" />
+    <text x="64" y="77" font-family="monospace" font-size="2" text-anchor="middle" fill="#94A3B8">CP2102</text>
+
+    <!-- AMS1117 3.3V LDO Voltage Regulator (SOT-223) -->
+    <rect x="42" y="73" width="9" height="7" rx="0.5" fill="#111827" stroke="#475569" stroke-width="0.5" />
+    <rect x="44.5" y="71.8" width="4" height="1.2" fill="url(#rfShieldGrad)" />
+    <line x1="43.5" y1="80" x2="43.5" y2="81.5" stroke="url(#rfShieldGrad)" stroke-width="0.8" />
+    <line x1="46.5" y1="80" x2="46.5" y2="81.5" stroke="url(#rfShieldGrad)" stroke-width="0.8" />
+    <line x1="49.5" y1="80" x2="49.5" y2="81.5" stroke="url(#rfShieldGrad)" stroke-width="0.8" />
+
+    <!-- SMD Capacitors & Resistors around circuit -->
+    <rect x="75" y="72" width="4" height="2" fill="#D97706" stroke="#94A3B8" stroke-width="0.4" />
+    <rect x="75" y="76" width="4" height="2" fill="#D97706" stroke="#94A3B8" stroke-width="0.4" />
+    <rect x="53" y="75" width="2" height="3.5" fill="#1E293B" stroke="#CBD5E1" stroke-width="0.4" />
+
+    <!-- Tactile Push Button: EN (Reset) -->
+    <rect x="39" y="87" width="7" height="7" rx="1" fill="#475569" stroke="#94A3B8" stroke-width="0.5" />
+    <circle cx="42.5" cy="90.5" r="2" fill="#0F172A" />
+    <text x="42.5" y="97" font-family="sans-serif" font-size="2.2" font-weight="700" text-anchor="middle" fill="#FFFFFF" opacity="0.8">EN</text>
+
+    <!-- Tactile Push Button: BOOT -->
+    <rect x="82" y="87" width="7" height="7" rx="1" fill="#475569" stroke="#94A3B8" stroke-width="0.5" />
+    <circle cx="85.5" cy="90.5" r="2" fill="#0F172A" />
+    <text x="85.5" y="97" font-family="sans-serif" font-size="2.2" font-weight="700" text-anchor="middle" fill="#FFFFFF" opacity="0.8">BOOT</text>
+
+    <!-- Status SMD LEDs with Real Glow -->
+    <!-- Red PWR LED -->
+    <rect x="52" y="86" width="3" height="2" fill="#EF4444" stroke="#991B1B" stroke-width="0.4" />
+    <circle cx="53.5" cy="87" r="1.2" fill="#FF4444" filter="url(#pwrGlow)" />
+    <text x="53.5" y="91" font-family="sans-serif" font-size="1.8" text-anchor="middle" fill="#EF4444">PWR</text>
+
+    <!-- Blue IO2 / Wi-Fi Active LED -->
+    <rect x="73" y="86" width="3" height="2" fill="#00E5FF" stroke="#0284C7" stroke-width="0.4" />
+    <circle cx="74.5" cy="87" r="1.2" fill="#00F2FE" filter="url(#wifiGlow)" />
+    <text x="74.5" y="91" font-family="sans-serif" font-size="1.8" text-anchor="middle" fill="#38BDF8">IO2</text>
+
+    <!-- ================= MICRO-USB PORT ================= -->
+    <g id="usb-connector">
+      <!-- Port Outer Shield Tab -->
+      <path d="M 54 99 L 74 99 L 74 111 A 1 1 0 0 1 73 112 L 55 112 A 1 1 0 0 1 54 111 Z" fill="url(#usbGrad)" stroke="#475569" stroke-width="0.8" />
+      <!-- Port Plug Cavity -->
+      <rect x="57" y="104" width="14" height="6.5" rx="1" fill="#0A0E14" />
+      <rect x="59" y="106" width="10" height="2.5" rx="0.5" fill="#1E293B" />
+      <line x1="61" y1="107.2" x2="67" y2="107.2" stroke="url(#goldGrad)" stroke-width="0.6" stroke-dasharray="1,0.8" />
+    </g>
+  </g>
+</svg>

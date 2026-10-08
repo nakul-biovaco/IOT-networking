@@ -1,0 +1,2716 @@
+/* ==========================================================================
+   Windows 11 Fluent UI Theme - IoT Network Health & Security Monitoring System
+   ========================================================================== */
+
+:root {
+    /* Fluent Windows 11 Color Palette */
+    --win-bg: #f3f3f3;
+    --win-surface: #ffffff;
+    --win-surface-alt: #fbfbfb;
+    --win-surface-hover: #f5f5f5;
+    --win-surface-active: #ebebeb;
+    --win-surface-selected: #e5f3ff;
+    --win-selected-border: #99d1ff;
+
+    /* Borders */
+    --win-border: #e5e5e5;
+    --win-border-subtle: #f0f0f0;
+    --win-border-strong: #d1d5db;
+
+    /* Typography & Foreground */
+    --win-text-primary: #1c1c1c;
+    --win-text-secondary: #5c5c5c;
+    --win-text-tertiary: #8a8a8a;
+    --win-text-disabled: #a8a8a8;
+
+    /* Accent & Semantic Colors */
+    --win-accent: #0067c0;
+    --win-accent-hover: #005da6;
+    --win-accent-active: #004e8c;
+    --win-accent-tint: #ebf3fb;
+    --win-accent-tint-hover: #def0fc;
+
+    --win-success: #107c41;
+    --win-success-tint: #dff6dd;
+    --win-success-border: #8fd88b;
+
+    --win-warning: #9d5d00;
+    --win-warning-tint: #fff4ce;
+    --win-warning-border: #fed382;
+
+    --win-danger: #d13438;
+    --win-danger-tint: #fde7e9;
+    --win-danger-border: #f8969b;
+
+    /* Font Stacks */
+    --font-ui: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", sans-serif;
+    --font-mono: "JetBrains Mono", "Cascadia Code", Consolas, "Courier New", monospace;
+
+    /* Shadows & Radii */
+    --shadow-window: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-flyout: 0 4px 16px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+    --radius-window: 8px;
+    --radius-panel: 6px;
+    --radius-btn: 4px;
+    --radius-pill: 12px;
+}
+
+/* Base Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #e9ecef;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--win-text-primary);
+    user-select: none;
+}
+
+/* Master Window Frame */
+.win11-window {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background: var(--win-bg);
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   1. APPLICATION MENU BAR
+   ========================================================================== */
+.win-menubar {
+    height: 32px;
+    min-height: 32px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--win-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    z-index: 100;
+}
+
+.menubar-left {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.menubar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.menubar-tool-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 24px;
+    padding: 0 9px;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: var(--radius-btn);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--win-text-primary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.menubar-tool-btn:hover {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+    color: var(--win-accent);
+}
+
+.menubar-tool-btn:active {
+    background: #cbd5e1;
+    transform: scale(0.98);
+}
+
+.menubar-tool-btn.active {
+    background: var(--win-accent);
+    color: #ffffff;
+    border-color: var(--win-accent);
+}
+
+.system-monitor-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--win-text-secondary);
+    background: #f8fafc;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--win-border);
+}
+
+.wifi-indicator {
+    color: var(--win-accent);
+    display: flex;
+    align-items: center;
+}
+
+.menu-item {
+    position: relative;
+    padding: 3px 8px;
+    font-size: 12px;
+    color: var(--win-text-primary);
+    border-radius: var(--radius-btn);
+    cursor: pointer;
+    transition: background 0.1s ease;
+}
+
+.menu-item:hover, .menu-item:focus {
+    background-color: var(--win-surface-hover);
+    outline: none;
+}
+
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 230px;
+    background: #ffffff;
+    border: 1px solid var(--win-border-strong);
+    border-radius: var(--radius-panel);
+    box-shadow: var(--shadow-flyout);
+    padding: 4px;
+    z-index: 2000;
+}
+
+.menu-item.open > .menu-dropdown,
+.menu-item:focus-within > .menu-dropdown {
+    display: block !important;
+}
+
+.menu-item.open {
+    background-color: var(--win-surface-hover);
+    color: var(--win-accent);
+}
+
+.menu-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--win-text-primary);
+    cursor: pointer;
+}
+
+.menu-option:hover {
+    background-color: var(--win-accent-tint);
+    color: var(--win-accent);
+}
+
+.menu-option.menu-option-danger {
+    color: var(--win-danger);
+}
+.menu-option.menu-option-danger:hover {
+    background-color: var(--win-danger-tint);
+    color: var(--win-danger);
+}
+
+.menu-option .shortcut {
+    font-size: 10px;
+    color: var(--win-text-tertiary);
+    font-family: var(--font-mono);
+}
+
+.menu-separator {
+    height: 1px;
+    background-color: var(--win-border);
+    margin: 4px 2px;
+}
+
+/* ==========================================================================
+   3. COMMAND TOOLBAR
+   ========================================================================== */
+.win-toolbar {
+    height: 44px;
+    min-height: 44px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--win-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    gap: 12px;
+}
+
+.toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.toolbar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: var(--font-ui);
+    border-radius: var(--radius-btn);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    white-space: nowrap;
+}
+
+.btn-primary-fluent {
+    background-color: var(--win-accent);
+    color: #ffffff;
+    border-color: var(--win-accent);
+}
+.btn-primary-fluent:hover {
+    background-color: var(--win-accent-hover);
+    border-color: var(--win-accent-hover);
+}
+.btn-primary-fluent:active {
+    background-color: var(--win-accent-active);
+}
+
+.btn-success-fluent {
+    background-color: #ffffff;
+    color: var(--win-success);
+    border-color: var(--win-border);
+}
+.btn-success-fluent:hover {
+    background-color: var(--win-success-tint);
+    border-color: var(--win-success-border);
+}
+
+.btn-danger-fluent {
+    background-color: #ffffff;
+    color: var(--win-danger);
+    border-color: var(--win-border);
+}
+.btn-danger-fluent:hover {
+    background-color: var(--win-danger-tint);
+    border-color: var(--win-danger-border);
+}
+
+.btn-warning-fluent {
+    background-color: #ffffff;
+    color: #b45309;
+    border-color: var(--win-border);
+}
+.btn-warning-fluent:hover {
+    background-color: #fef3c7;
+    border-color: #fde68a;
+    color: #92400e;
+}
+
+.btn-subtle-fluent {
+    background-color: transparent;
+    color: var(--win-text-primary);
+    border-color: transparent;
+}
+.btn-subtle-fluent:hover {
+    background-color: var(--win-surface-hover);
+    border-color: var(--win-border);
+}
+
+#btn-toolbar-fullscreen {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    font-weight: 500;
+}
+
+#btn-toolbar-fullscreen:hover {
+    background: #e0f2fe;
+    border-color: #38bdf8;
+    color: #0284c7;
+}
+
+#btn-toolbar-fullscreen.active {
+    background: var(--win-accent);
+    border-color: var(--win-accent);
+    color: #ffffff;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 20px;
+    background-color: var(--win-border);
+    margin: 0 4px;
+}
+
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toolbar-info-pill {
+    font-size: 11px;
+    background: #f8fafc;
+    border: 1px solid var(--win-border);
+    border-radius: 4px;
+    padding: 4px 8px;
+    display: flex;
+    gap: 4px;
+}
+
+.toolbar-info-pill .pill-label {
+    color: var(--win-text-tertiary);
+}
+.toolbar-info-pill .pill-val {
+    color: var(--win-text-primary);
+    font-family: var(--font-mono);
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   4. WORKSPACE MAIN CONTENT
+   ========================================================================== */
+.win-workspace {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px 10px;
+    overflow: hidden;
+    background-color: var(--win-bg);
+    min-height: 0;
+}
+
+.workspace-row {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+    min-height: 0;
+}
+
+.tier-top {
+    flex: 1.25;
+    min-height: 220px;
+}
+
+.tier-mid {
+    flex: 0.9;
+    min-height: 150px;
+}
+
+.tier-bottom {
+    flex: 0.95;
+    min-height: 150px;
+}
+
+
+/* Fluent Panels */
+.fluent-panel {
+    background: var(--win-surface);
+    border: 1px solid var(--win-border);
+    border-radius: var(--radius-panel);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.panel-tree {
+    flex: 0 0 260px;
+    min-width: 220px;
+}
+
+.panel-topology {
+    flex: 1;
+    min-width: 320px;
+}
+
+.panel-details {
+    flex: 0 0 310px;
+    min-width: 280px;
+}
+
+.panel-devices-table {
+    flex: 1;
+    width: 100%;
+}
+
+.panel-alerts {
+    flex: 1.1;
+    min-width: 280px;
+}
+
+.panel-metrics {
+    flex: 1.3;
+    min-width: 340px;
+}
+
+.panel-ports {
+    flex: 0.9;
+    min-width: 240px;
+}
+
+/* Panel Title Bar */
+.panel-title-bar {
+    height: 32px;
+    min-height: 32px;
+    background: #fbfbfb;
+    border-bottom: 1px solid var(--win-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.panel-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--win-text-primary);
+}
+
+.panel-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.icon-tool-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--win-text-secondary);
+    cursor: pointer;
+}
+.icon-tool-btn:hover {
+    background: var(--win-surface-hover);
+    border-color: var(--win-border);
+    color: var(--win-text-primary);
+}
+
+.fluent-link-btn {
+    background: transparent;
+    border: none;
+    color: var(--win-accent);
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+.fluent-link-btn:hover {
+    text-decoration: underline;
+    background-color: var(--win-accent-tint);
+}
+
+/* ==========================================================================
+   TREE VIEW (Top Left)
+   ========================================================================== */
+.tree-body {
+    flex: 1;
+    padding: 6px;
+    overflow-y: auto;
+    font-size: 12px;
+}
+
+.tree-node {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+.tree-node:hover {
+    background: var(--win-surface-hover);
+}
+
+.tree-chevron {
+    width: 12px;
+    text-align: center;
+    color: var(--win-text-tertiary);
+    font-size: 10px;
+}
+
+.tree-children {
+    padding-left: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.tree-category {
+    margin-top: 2px;
+}
+
+.tree-category-header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--win-text-secondary);
+    font-size: 11.5px;
+}
+.tree-category-header:hover {
+    background: var(--win-surface-hover);
+    color: var(--win-text-primary);
+}
+
+.tree-category-count {
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--win-text-tertiary);
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 10px;
+}
+
+.tree-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px 3px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--win-text-primary);
+    font-size: 11.5px;
+}
+.tree-item:hover {
+    background: var(--win-surface-hover);
+}
+.tree-item.selected {
+    background: var(--win-surface-selected);
+    color: var(--win-accent);
+    font-weight: 500;
+}
+
+.tree-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* ==========================================================================
+   NETWORK TOPOLOGY (Top Center)
+   ========================================================================== */
+.topology-controls {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.topo-btn-divider {
+    width: 1px;
+    height: 16px;
+    background-color: var(--win-border-strong);
+    margin: 0 3px;
+}
+
+.tool-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    height: 24px;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--win-text-secondary);
+    font-size: 11px;
+    font-family: var(--font-ui);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    white-space: nowrap;
+}
+.tool-btn:hover {
+    background: var(--win-surface-hover);
+    border-color: var(--win-border);
+    color: var(--win-text-primary);
+}
+.tool-btn.active {
+    background: var(--win-accent-tint);
+    border-color: var(--win-selected-border);
+    color: var(--win-accent);
+    font-weight: 600;
+}
+
+.topo-badge {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--win-accent);
+    background: var(--win-accent-tint);
+    border: 1px solid var(--win-selected-border);
+    border-radius: var(--radius-pill);
+    padding: 2px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.topology-body {
+    flex: 1;
+    position: relative;
+    background-color: #fafbfc;
+    background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+    background-size: 16px 16px;
+    overflow: hidden;
+    cursor: default;
+    touch-action: none;
+}
+
+.topology-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Standalone Clean SVG Topology Nodes (NO Box Cards, NO Dashed Circles) */
+.topo-node {
+    cursor: grab;
+    user-select: none;
+}
+.topo-node:active {
+    cursor: grabbing;
+}
+.topo-node image {
+    transition: filter 0.12s ease;
+}
+.topo-node:hover image {
+    filter: drop-shadow(0 3px 6px rgba(0, 103, 192, 0.35));
+}
+.topo-node.selected image {
+    filter: drop-shadow(0 2px 8px rgba(0, 103, 192, 0.55));
+}
+.topo-node.selected .node-hostname {
+    fill: var(--win-accent) !important;
+    font-weight: 700 !important;
+}
+
+/* Fullscreen Topology Panel Mode */
+.panel-topology.fullscreen-panel {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    margin: 0 !important;
+}
+
+.panel-topology.fullscreen-panel .topology-body {
+    flex: 1 1 auto !important;
+    height: calc(100vh - 42px) !important;
+    width: 100vw !important;
+}
+
+/* Topology Interactive Tooltip Card */
+.topo-tooltip-card {
+    position: fixed;
+    z-index: 2500;
+    pointer-events: none;
+    background: #ffffff;
+    border: 1px solid var(--win-border-strong);
+    border-radius: 6px;
+    box-shadow: var(--shadow-flyout);
+    padding: 8px 10px;
+    min-width: 190px;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.topo-tooltip-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tt-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--win-border);
+    font-size: 11.5px;
+    font-weight: 600;
+}
+
+.tt-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 6px;
+    font-size: 11px;
+}
+
+.tt-row {
+    display: flex;
+    justify-content: space-between;
+    color: var(--win-text-secondary);
+}
+
+.tt-row .mono {
+    color: var(--win-text-primary);
+    font-weight: 500;
+}
+
+.tt-metrics {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px dashed var(--win-border);
+}
+
+.tt-metric-pill {
+    flex: 1;
+    background: #f8fafc;
+    border: 1px solid var(--win-border-subtle);
+    border-radius: 3px;
+    padding: 2px 4px;
+    font-size: 9.5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tt-metric-pill span {
+    color: var(--win-text-tertiary);
+}
+
+.tt-metric-pill b {
+    font-family: var(--font-mono);
+    color: var(--win-text-primary);
+}
+
+
+/* ==========================================================================
+   DEVICE DETAILS (Top Right)
+   ========================================================================== */
+.details-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 10px;
+    gap: 8px;
+}
+
+.device-summary-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--win-border);
+}
+
+.device-avatar {
+    width: 36px;
+    height: 36px;
+    background: var(--win-accent-tint);
+    color: var(--win-accent);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.device-meta-header h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--win-text-primary);
+}
+
+.device-meta-header p {
+    font-size: 11px;
+    color: var(--win-text-secondary);
+    font-family: var(--font-mono);
+}
+
+/* Fluent Tabs */
+.fluent-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--win-border);
+    gap: 4px;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--win-text-secondary);
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.tab-btn:hover {
+    color: var(--win-text-primary);
+}
+
+.tab-btn.active {
+    color: var(--win-accent);
+    border-bottom-color: var(--win-accent);
+    font-weight: 600;
+}
+
+.tab-pane {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+}
+.tab-pane.active {
+    display: flex;
+}
+
+.property-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.prop-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11.5px;
+    padding: 2px 0;
+}
+
+.prop-label {
+    color: var(--win-text-secondary);
+}
+
+.prop-value {
+    color: var(--win-text-primary);
+    font-weight: 500;
+    text-align: right;
+}
+
+.telemetry-card {
+    background: #f8fafc;
+    border: 1px solid var(--win-border);
+    border-radius: 4px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 4px;
+}
+
+.telemetry-metric-title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--win-text-secondary);
+}
+
+.telemetry-val {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--win-text-primary);
+}
+
+.fluent-progress {
+    height: 5px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.fluent-progress-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.mini-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 140px;
+    overflow-y: auto;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    padding: 4px 6px;
+    background: #f8fafc;
+    border: 1px solid var(--win-border-subtle);
+    border-radius: 3px;
+}
+
+.metric-tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+}
+
+/* ==========================================================================
+   DISCOVERED DEVICES TABLE (Middle Row)
+   ========================================================================== */
+.table-scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    background: #ffffff;
+}
+
+.fluent-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
+    text-align: left;
+}
+
+.fluent-table thead {
+    position: sticky;
+    top: 0;
+    background: #fbfbfb;
+    border-bottom: 1px solid var(--win-border-strong);
+    z-index: 10;
+}
+
+.fluent-table th {
+    padding: 6px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--win-text-secondary);
+    border-right: 1px solid var(--win-border-subtle);
+}
+
+.fluent-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--win-border-subtle);
+    border-right: 1px solid var(--win-border-subtle);
+    color: var(--win-text-primary);
+    white-space: nowrap;
+}
+
+.fluent-table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.08s ease;
+}
+
+.fluent-table tbody tr:hover {
+    background-color: var(--win-surface-hover);
+}
+
+.fluent-table tbody tr.selected-row {
+    background-color: var(--win-surface-selected) !important;
+}
+
+.table-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.table-count-badge {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--win-text-tertiary);
+    background: #e2e8f0;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-left: 4px;
+}
+
+.fluent-search-box {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #ffffff;
+    border: 1px solid var(--win-border-strong);
+    border-radius: var(--radius-btn);
+    padding: 2px 6px;
+    width: 180px;
+    height: 24px;
+}
+
+.fluent-search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 11px;
+    font-family: var(--font-ui);
+    width: 100%;
+    color: var(--win-text-primary);
+}
+
+.table-empty-row {
+    text-align: center;
+    padding: 24px !important;
+    color: var(--win-text-tertiary);
+}
+
+/* ==========================================================================
+   BOTTOM PANELS: ALERTS, METRICS, PORTS
+   ========================================================================== */
+.alerts-scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.alert-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background: #ffffff;
+    border: 1px solid var(--win-border);
+    border-left: 3px solid var(--win-warning);
+    border-radius: 4px;
+    padding: 6px 8px;
+    gap: 8px;
+    font-size: 11.5px;
+}
+
+.alert-row.high {
+    border-left-color: var(--win-danger);
+    background-color: #fffbfa;
+}
+.alert-row.medium {
+    border-left-color: var(--win-warning);
+    background-color: #fffdf5;
+}
+.alert-row.low {
+    border-left-color: var(--win-accent);
+}
+
+.alert-row-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.alert-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10.5px;
+}
+
+.alert-time {
+    color: var(--win-text-tertiary);
+    font-family: var(--font-mono);
+}
+
+.alert-type-name {
+    font-weight: 600;
+    color: var(--win-text-primary);
+}
+
+.alert-detail-text {
+    font-size: 11px;
+    color: var(--win-text-secondary);
+}
+
+.alert-count-pill {
+    font-size: 10px;
+    font-weight: 600;
+    background: var(--win-danger);
+    color: #ffffff;
+    padding: 0 5px;
+    border-radius: 8px;
+    margin-left: 4px;
+}
+
+.alerts-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 10px;
+    gap: 8px;
+    color: var(--win-text-tertiary);
+    font-size: 11.5px;
+}
+
+/* Network Metrics Chart */
+.chart-header-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chart-metric-selector {
+    display: flex;
+    background: #f1f5f9;
+    border-radius: 4px;
+    padding: 2px;
+    gap: 2px;
+}
+
+.metric-tab-btn {
+    border: none;
+    background: transparent;
+    padding: 2px 8px;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--win-text-secondary);
+    border-radius: 3px;
+    cursor: pointer;
+}
+.metric-tab-btn.active {
+    background: #ffffff;
+    color: var(--win-accent);
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.fluent-select-sm {
+    background: #ffffff;
+    border: 1px solid var(--win-border-strong);
+    border-radius: var(--radius-btn);
+    font-size: 10.5px;
+    font-family: var(--font-ui);
+    padding: 2px 4px;
+    outline: none;
+}
+
+.chart-body {
+    flex: 1;
+    padding: 6px;
+    position: relative;
+    min-height: 0;
+}
+
+.chart-canvas-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+/* Ports Panel */
+.ports-scroll-container {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.ports-table td {
+    padding: 4px 8px;
+}
+
+.port-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.dot-open {
+    background-color: var(--win-success);
+}
+.dot-closed {
+    background-color: var(--win-danger);
+}
+
+/* ==========================================================================
+   5. WINDOW STATUS BAR (FOOTER)
+   ========================================================================== */
+.win-statusbar {
+    height: 24px;
+    min-height: 24px;
+    background: #fbfbfb;
+    border-top: 1px solid var(--win-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-size: 11px;
+    color: var(--win-text-secondary);
+    z-index: 100;
+}
+
+.status-left, .status-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-segment {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.status-divider {
+    width: 1px;
+    height: 12px;
+    background-color: var(--win-border);
+}
+
+/* Generic Utilities */
+.mono {
+    font-family: var(--font-mono);
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.status-dot, .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-online, .status-pill.online {
+    background-color: var(--win-success);
+    color: #ffffff;
+}
+.dot-degraded, .status-pill.degraded {
+    background-color: var(--win-warning);
+    color: #ffffff;
+}
+.dot-offline, .status-pill.offline {
+    background-color: var(--win-danger);
+    color: #ffffff;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.badge-subtle {
+    font-size: 9.5px;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid #e2e8f0;
+}
+
+.badge-warning {
+    font-size: 9.5px;
+    background: var(--win-warning-tint);
+    color: var(--win-warning);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid var(--win-warning-border);
+    font-weight: 500;
+}
+
+.badge-success {
+    font-size: 9.5px;
+    background: var(--win-success-tint);
+    color: var(--win-success);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid var(--win-success-border);
+    font-weight: 500;
+}
+
+/* Spinner */
+.fluent-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--win-border);
+    border-top-color: var(--win-accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   MODALS / DIALOGS (Windows 11 Fluent)
+   ========================================================================== */
+.win-modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.win-modal-backdrop.show {
+    display: flex;
+}
+
+.win-dialog {
+    background: #ffffff;
+    border: 1px solid var(--win-border-strong);
+    border-radius: var(--radius-panel);
+    box-shadow: var(--shadow-window);
+    width: 90%;
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.dialog-titlebar {
+    height: 36px;
+    background: #fbfbfb;
+    border-bottom: 1px solid var(--win-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--win-text-primary);
+}
+
+.dialog-close-btn {
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+.dialog-close-btn:hover {
+    background: #fde7e9;
+    color: #d13438;
+}
+
+.dialog-content {
+    padding: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.dialog-footer {
+    height: 48px;
+    background: #fbfbfb;
+    border-top: 1px solid var(--win-border);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 16px;
+    gap: 8px;
+}
+
+.fluent-btn {
+    height: 28px;
+    padding: 0 16px;
+    font-size: 12px;
+    font-family: var(--font-ui);
+    border: 1px solid var(--win-border-strong);
+    background: #ffffff;
+    border-radius: var(--radius-btn);
+    cursor: pointer;
+}
+.fluent-btn:hover {
+    background: var(--win-surface-hover);
+}
+
+.fluent-btn-primary {
+    background: var(--win-accent);
+    color: #ffffff;
+    border-color: var(--win-accent);
+}
+.fluent-btn-primary:hover {
+    background: var(--win-accent-hover);
+}
+
+.log-console {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 12px;
+    border-radius: 4px;
+    height: 220px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+.report-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.report-stat-card {
+    background: #f8fafc;
+    border: 1px solid var(--win-border);
+    border-radius: 4px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.report-stat-val {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+}
+
+.report-stat-lbl {
+    font-size: 11px;
+    color: var(--win-text-secondary);
+}
+
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-row label {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--win-text-secondary);
+}
+
+.fluent-input {
+    height: 28px;
+    border: 1px solid var(--win-border-strong);
+    border-radius: var(--radius-btn);
+    padding: 0 8px;
+    font-size: 12px;
+    font-family: var(--font-ui);
+    outline: none;
+}
+.fluent-input:focus {
+    border-color: var(--win-accent);
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATIONS
+   ========================================================================== */
+.toast-container {
+    position: fixed;
+    bottom: 32px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 3000;
+}
+
+.toast {
+    background: #ffffff;
+    border: 1px solid var(--win-border-strong);
+    border-left: 4px solid var(--win-accent);
+    border-radius: 4px;
+    box-shadow: var(--shadow-flyout);
+    padding: 8px 14px;
+    font-size: 11.5px;
+    color: var(--win-text-primary);
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast.toast-success {
+    border-left-color: var(--win-success);
+}
+.toast.toast-error {
+    border-left-color: var(--win-danger);
+}
+
+/* ==========================================================================
+   MOBILE & RESPONSIVE ARCHITECTURE (Native Smartphone Experience)
+   ========================================================================== */
+
+/* Elements hidden by default on Desktop (> 820px) */
+.mobile-app-header,
+.mobile-bottom-nav,
+.mob-topo-sheet,
+.mobile-drawer,
+.mobile-drawer-backdrop,
+#devices-mobile-cards-wrap {
+    display: none !important;
+}
+
+/* TABLET VIEWPORT (821px to 1024px) */
+@media screen and (min-width: 821px) and (max-width: 1024px) {
+    .panel-tree { flex: 0 0 220px; }
+    .panel-details { flex: 0 0 280px; }
+    .tier-bottom { flex-wrap: wrap; }
+    .panel-alerts { flex: 1 1 45%; }
+    .panel-ports { flex: 1 1 45%; }
+    .panel-metrics { flex: 1 1 100%; height: 260px; }
+}
+
+/* SMARTPHONE & NARROW TABLET (<= 820px) */
+@media screen and (max-width: 820px) {
+    html, body {
+        height: 100% !important;
+        overflow: hidden !important;
+        background: #f8fafc !important;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .win11-window {
+        width: 100vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+        background: #f8fafc !important;
+    }
+
+    /* 1. HIDE ALL DESKTOP WINDOW CHROME */
+    .win-menubar,
+    .win-toolbar,
+    .win-statusbar,
+    .panel-tree {
+        display: none !important;
+    }
+
+    /* 2. NATIVE MOBILE APP HEADER */
+    .mobile-app-header {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        height: 52px;
+        min-height: 52px;
+        padding: 0 14px;
+        background: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        z-index: 100;
+    }
+
+    .mobile-header-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .mobile-brand-icon {
+        color: var(--win-accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: var(--win-accent-tint);
+        border-radius: 8px;
+    }
+
+    .mobile-header-titles {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mobile-app-title {
+        font-size: 13.5px;
+        font-weight: 700;
+        color: var(--win-text-primary);
+        letter-spacing: -0.2px;
+        line-height: 1.2;
+    }
+
+    .mobile-app-sub {
+        font-size: 10.5px;
+        font-weight: 500;
+        color: var(--win-text-secondary);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .mobile-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .mob-header-action-btn {
+        width: 34px;
+        height: 34px;
+        border: 1px solid #e2e8f0;
+        background: #f8fafc;
+        border-radius: 8px;
+        color: var(--win-text-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.15s ease;
+    }
+    .mob-header-action-btn:active {
+        background: #e2e8f0;
+        transform: scale(0.96);
+    }
+
+    /* 3. MOBILE WORKSPACE SCROLLER */
+    .win-workspace {
+        flex: 1 !important;
+        height: calc(100dvh - 110px) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        padding: 10px !important;
+        gap: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        background: #f8fafc !important;
+        position: relative;
+    }
+
+    .workspace-row {
+        display: contents !important;
+    }
+
+    /* By default on mobile, HIDE all panels except the active tab's panel */
+    .fluent-panel {
+        display: none !important;
+    }
+
+    /* TAB 1: TOPOLOGY (Full Screen Map) */
+    body[data-mob-tab="topology"] #panel-topology-main {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        height: 100% !important;
+        min-height: calc(100dvh - 132px) !important;
+        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        overflow: hidden !important;
+        position: relative !important;
+        background: #ffffff;
+    }
+
+    #panel-topology-main .panel-title-bar {
+        padding: 0 10px;
+        height: 36px;
+    }
+    #panel-topology-main .panel-title span {
+        font-size: 11.5px;
+    }
+    #panel-topology-main .topo-badge {
+        font-size: 9.5px;
+        padding: 1px 6px;
+    }
+    #panel-topology-main .topology-controls {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        border: 1px solid #cbd5e1;
+        border-radius: 20px;
+        padding: 3px 6px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+        z-index: 20;
+    }
+    #panel-topology-main .topo-btn-divider {
+        height: 14px;
+    }
+
+    /* TAB 2: DEVICES (Mobile Cards List) */
+    body[data-mob-tab="devices"] #panel-devices-main {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        min-height: calc(100dvh - 132px) !important;
+        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        background: #ffffff;
+        overflow: hidden;
+    }
+    body[data-mob-tab="devices"] .table-scroll-container {
+        display: none !important;
+    }
+    body[data-mob-tab="devices"] #devices-mobile-cards-wrap {
+        display: block !important;
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 10px;
+    }
+
+    /* Mobile Device Cards */
+    .devices-mobile-cards-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .mob-device-card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        cursor: pointer;
+        transition: all 0.12s ease;
+    }
+    .mob-device-card:active, .mob-device-card.selected {
+        border-color: var(--win-accent);
+        background: #f0f7ff;
+    }
+
+    .mob-card-icon-wrap {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .mob-card-img {
+        width: 26px;
+        height: 26px;
+        object-fit: contain;
+    }
+    .mob-card-dot {
+        position: absolute;
+        bottom: -2px;
+        right: -2px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: 1.5px solid #ffffff;
+    }
+
+    .mob-card-info {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .mob-card-row1 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .mob-card-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--win-text-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .mob-card-row2 {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        color: var(--win-text-secondary);
+    }
+    .mob-card-ip {
+        font-weight: 600;
+        color: #334155;
+    }
+    .mob-card-sep {
+        color: #cbd5e1;
+    }
+    .mob-card-vendor {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .mob-card-row3 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 3px;
+    }
+    .mob-card-pill {
+        font-size: 10px;
+        background: #f1f5f9;
+        color: #475569;
+        padding: 1px 6px;
+        border-radius: 4px;
+    }
+    .mob-card-mac {
+        font-size: 9.5px;
+        color: #94a3b8;
+        margin-left: auto;
+    }
+
+    .mob-card-arrow {
+        color: #94a3b8;
+        display: flex;
+        align-items: center;
+    }
+
+    /* TAB 3: METRICS */
+    body[data-mob-tab="metrics"] #panel-metrics-main {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        min-height: calc(100dvh - 132px) !important;
+        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        background: #ffffff;
+    }
+    #panel-metrics-main .chart-body {
+        flex: 1;
+        min-height: 280px;
+    }
+
+    /* TAB 4: SECURITY */
+    body[data-mob-tab="security"] #panel-alerts-main {
+        display: flex !important;
+        flex-direction: column !important;
+        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        background: #ffffff;
+        margin-bottom: 12px;
+    }
+    body[data-mob-tab="security"] #panel-ports-main {
+        display: flex !important;
+        flex-direction: column !important;
+        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        background: #ffffff;
+    }
+
+    /* TAB 5: DETAILS */
+    body[data-mob-tab="details"] #panel-details-main {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        min-height: calc(100dvh - 132px) !important;
+        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        background: #ffffff;
+    }
+    #panel-details-main .details-body {
+        padding: 12px;
+    }
+    #panel-details-main .fluent-tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+    }
+
+    /* 4. NATIVE MOBILE BOTTOM NAVIGATION */
+    .mobile-bottom-nav {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-around;
+        height: 56px;
+        min-height: 56px;
+        background: #ffffff;
+        border-top: 1px solid #e2e8f0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.04);
+        padding-bottom: env(safe-area-inset-bottom);
+        z-index: 1000;
+    }
+
+    .mob-tab-btn {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        height: 100%;
+        background: transparent;
+        border: none;
+        color: #64748b;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        padding: 2px 0;
+    }
+    .mob-tab-btn svg {
+        transition: transform 0.15s ease;
+    }
+    .mob-tab-btn span {
+        font-family: var(--font-ui);
+        font-size: 10px;
+        font-weight: 600;
+    }
+    .mob-tab-btn.active {
+        color: var(--win-accent);
+    }
+    .mob-tab-btn.active svg {
+        transform: translateY(-1px);
+        stroke-width: 2.4;
+    }
+
+    /* 5. QUICK TOPOLOGY NODE BOTTOM SHEET */
+    .mob-topo-sheet {
+        display: flex !important;
+        flex-direction: column;
+        position: absolute;
+        bottom: 64px;
+        left: 12px;
+        right: 12px;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 14px;
+        padding: 10px 14px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
+        z-index: 50;
+        transform: translateY(180%);
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+    }
+    .mob-topo-sheet.show {
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+    .mob-sheet-handle {
+        width: 36px;
+        height: 3px;
+        background: #cbd5e1;
+        border-radius: 2px;
+        margin: 0 auto 6px auto;
+    }
+    .mob-sheet-body {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .mob-sheet-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .mob-sheet-img {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+    }
+    .mob-sheet-titles h4 {
+        font-size: 13px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 2px;
+    }
+    .mob-sheet-titles p {
+        font-size: 11px;
+        color: #64748b;
+    }
+    .mob-sheet-details-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 6px 12px;
+        background: var(--win-accent);
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        font-size: 11.5px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    /* 6. MOBILE SLIDE-OVER DRAWER */
+    .mobile-drawer-backdrop {
+        display: none !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(2px);
+        z-index: 2500;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+    .mobile-drawer-backdrop.open {
+        display: block !important;
+        opacity: 1;
+    }
+
+    .mobile-drawer {
+        display: flex !important;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 290px;
+        height: 100vh;
+        background: #ffffff;
+        z-index: 2600;
+        box-shadow: -4px 0 24px rgba(0, 0, 0, 0.18);
+        transform: translateX(100%);
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-drawer.open {
+        transform: translateX(0);
+    }
+
+    .drawer-header {
+        height: 52px;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+    }
+    .drawer-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13.5px;
+        font-weight: 700;
+        color: var(--win-text-primary);
+    }
+    .drawer-close-btn {
+        background: transparent;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        padding: 6px;
+        color: #64748b;
+    }
+
+    .drawer-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    .drawer-section-title {
+        font-size: 10.5px;
+        font-weight: 700;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 6px 8px 2px 8px;
+    }
+    .drawer-action-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-family: var(--font-ui);
+        font-size: 12.5px;
+        font-weight: 500;
+        color: var(--win-text-primary);
+        cursor: pointer;
+        text-align: left;
+        transition: background 0.12s ease;
+    }
+    .drawer-action-btn:active {
+        background: #e2e8f0;
+    }
+    .drawer-action-btn.primary {
+        background: var(--win-accent);
+        border-color: var(--win-accent);
+        color: #ffffff;
+        font-weight: 600;
+    }
+    .drawer-divider {
+        height: 1px;
+        background: #e2e8f0;
+        margin: 8px 0;
+    }
+}
+
+/* ==============================================================================
+   TOPOLOGY ARCHITECTURE REFERENCE INSPECTOR MODAL & BADGES
+   ============================================================================== */
+.topo-badge {
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+.topo-badge:hover {
+    background: #e0edff !important;
+    border-color: #0078d4 !important;
+    color: #004e8c !important;
+    transform: translateY(-1px);
+}
+.topo-ref-hint {
+    background: rgba(0, 120, 212, 0.15);
+    color: #0078d4;
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 4px;
+    margin-left: 4px;
+    letter-spacing: 0.2px;
+}
+
+.topo-ref-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topo-ref-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.topo-ref-dialog {
+    position: relative;
+    z-index: 10;
+    width: 90%;
+    max-width: 540px;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+    overflow: hidden;
+    animation: topoRefPop 0.18s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+@keyframes topoRefPop {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.topo-ref-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.topo-ref-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-ui);
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--win-text-primary);
+}
+
+.win-modal-close {
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.1s ease;
+}
+.win-modal-close:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.topo-ref-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.topo-ref-hero {
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.topo-ref-type-badge {
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 800;
+    color: #005a9e;
+    letter-spacing: 0.3px;
+}
+
+.topo-ref-standard {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    color: #1e3a8a;
+}
+
+.topo-ref-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.ref-prop {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+
+.ref-prop.full-width {
+    grid-column: span 2;
+}
+
+.ref-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.ref-val {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--win-text-primary);
+}
+
+.ref-val.desc {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #334155;
+}
+
+.topo-ref-switch-box {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ref-switch-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--win-text-primary);
+}
+.ref-switch-tip {
+    font-size: 10.5px;
+    font-weight: 400;
+    color: #94a3b8;
+}
+
+.topo-switch-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.topo-pill-btn {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-family: var(--font-ui);
+    font-size: 11.5px;
+    font-weight: 500;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.12s ease;
+}
+
+.topo-pill-btn:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+.topo-pill-btn.active {
+    background: #0078d4;
+    border-color: #0078d4;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0, 120, 212, 0.35);
+}
+
+/* ==========================================================================
+   MULTI-NETWORK & ROUTER SELECTOR STYLES (WINDOWS 11 FLUENT)
+   ========================================================================== */
+
+.toolbar-network-selector-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 8px;
+    position: relative;
+}
+
+.network-selector-pill {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 2px 6px 2px 10px;
+    font-size: 11.5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    user-select: none;
+}
+
+.network-selector-pill:hover {
+    border-color: var(--win-accent);
+}
+
+.net-pill-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+    margin-right: 6px;
+}
+
+.net-select-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 3px 6px;
+    border-radius: 4px;
+    transition: background 0.12s ease;
+}
+
+.net-select-trigger:hover {
+    background: #f1f5f9;
+}
+
+.net-title {
+    font-weight: 600;
+    color: #0f172a;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.net-badge {
+    font-size: 9.5px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.net-badge.badge-connected {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.net-badge.badge-inrange {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.net-badge.badge-saved {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.net-chevron {
+    font-size: 10px;
+    color: #64748b;
+}
+
+/* Network Popover Menu */
+.network-popover-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 320px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.18), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: popoverFadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popoverFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.popover-search {
+    padding: 8px 10px;
+    border-bottom: 1px solid #f1f5f9;
+    background: #f8fafc;
+}
+
+.popover-search input {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 11.5px;
+    font-family: var(--font-ui);
+    outline: none;
+}
+
+.popover-search input:focus {
+    border-color: var(--win-accent);
+    box-shadow: 0 0 0 2px rgba(0, 103, 192, 0.15);
+}
+
+.popover-scroll {
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 4px;
+}
+
+.popover-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #94a3b8;
+    padding: 6px 8px 4px 8px;
+}
+
+.popover-net-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.1s ease;
+}
+
+.popover-net-item:hover {
+    background: #f1f5f9;
+}
+
+.popover-net-item.active {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+}
+
+.popover-net-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+}
+
+.popover-net-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.popover-net-meta {
+    overflow: hidden;
+}
+
+.popover-net-name {
+    font-weight: 600;
+    font-size: 12px;
+    color: #1e293b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.popover-net-sub {
+    font-size: 10px;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.popover-net-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.popover-signal-badge {
+    font-size: 10px;
+    color: #0369a1;
+    font-weight: 600;
+    background: #f0f9ff;
+    padding: 2px 5px;
+    border-radius: 4px;
+    border: 1px solid #bae6fd;
+}
+
+.popover-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+}
+
+.popover-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #334155;
+    transition: all 0.1s ease;
+}
+
+.popover-btn:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+/* Device Assignment Dialog List */
+.assign-device-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.1s ease;
+    border-radius: 4px;
+}
+
+.assign-device-row:hover {
+    background: #f8fafc;
+}
+
+.assign-device-row label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.assign-device-info {
+    flex-grow: 1;
+}
+
+.assign-dev-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.assign-dev-meta {
+    font-size: 10.5px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+.fluent-btn-mini {
+    padding: 3px 8px;
+    font-size: 11px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #475569;
+}
+
+.fluent-btn-mini:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
